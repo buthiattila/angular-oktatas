@@ -1,0 +1,20 @@
+<div *ngIf="post">
+  <p>
+    {{post.id}}
+  </p>
+  <p>
+    {{post.title}}
+  </p>
+  <p>
+    {{post.body}}
+  </p>
+  <p >
+    <span *ngFor="let tag of post.tags" >
+      {{tag}}
+    </span>
+  </p>
+  <p>
+    {{post.reactions}}
+  </p>
+</div>
+

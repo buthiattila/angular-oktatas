@@ -1,0 +1,36 @@
+
+<p *ngIf="loading">
+  Kérjük várjon!
+</p>
+
+<table *ngIf="!loading">
+  <tr>
+    <td>
+      ID
+    </td>
+    <td>
+      Cím
+    </td>
+    <td>
+      Szöveg
+    </td>
+    <td>
+      Tagek
+    </td>
+    <td>
+      Reakciók
+    </td>
+    <td>
+      ....
+    </td>
+  </tr>
+  <tr *ngFor="let post of posts">
+    <td>{{post.id}}</td>
+    <td>{{post.title}}</td>
+    <td>{{post.body}}</td>
+    <td>{{post.tags}}</td>
+    <td>{{post.reactions}}</td>
+    <td><button (click)="editPost(post)">Szerkesztés</button></td>
+  </tr>
+</table>
+

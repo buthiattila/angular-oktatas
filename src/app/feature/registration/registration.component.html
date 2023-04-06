@@ -1,0 +1,17 @@
+<h1>Regisztráció</h1>
+
+<form [formGroup]="registrationForm">
+  <div>
+    <label for="registration-username">Felhasználónév</label>
+    <input id="registration-username" type="text" formControlName="registration_username" required>
+  </div>
+  <div>
+    <label for="registration-password">Jelszó</label>
+    <input id="registration-password" type="password" formControlName="registration_password">
+  </div>
+  <div>
+    <label for="registration-iscompany">Cég vagy?</label>
+    <input id="registration-iscompany" type="checkbox" formControlName="registration_isCompany">
+  </div>
+  <button type="submit" (click)="registration()">Regisztráció</button>
+</form>
