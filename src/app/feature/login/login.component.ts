@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth/auth.service';
 import { LoginResponse } from 'src/app/core/types/api/login-api.type';
 import { LoginAuth } from 'src/app/core/types/auth/login-auth.type';
-//import { UserTestData } from 'src/app/core/help/user.enum';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +12,15 @@ import { LoginAuth } from 'src/app/core/types/auth/login-auth.type';
 })
 export class LoginComponent   {
 
+
   loginForm: FormGroup;
 
   constructor(private authSerivce: AuthService, private router: Router){
     this.loginForm = new FormGroup({
 
-      login_username: new FormControl('',[Validators.required]),
-      login_password: new FormControl('',[Validators.required]),
-      login_isCompany: new FormControl(0)
+      login_username: new FormControl("kminchelle",[Validators.required]),
+      login_password: new FormControl("0lelplR",[Validators.required]),
+      login_isCompany: new FormControl(null)
 
     });
   }
