@@ -19,14 +19,16 @@ export class PostService {
     });
   }
 
+
+  getAllPostsToComponent(): Observable<PostResponse>{
+    return this.httService.getAllPosts();
+  }
+
   getSinglePostById(id:number):Post | null | undefined{
-    const allPost: Post[] | null = this.posts.value;
-    if( allPost !== null){
-      return allPost.find((post)=>{
-        return post.id === id
-      })
+    if( this.posts.value !== null){
+      return this.posts.value.find((post)=>post.id == id);
     }else{
-      return allPost;
+      return this.posts.value;
     }
   }
 

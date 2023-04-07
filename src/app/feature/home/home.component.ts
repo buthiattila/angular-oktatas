@@ -7,7 +7,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit, OnDestroy{
 
-
+  value = 'Clear me';
   ngOnInit(): void {
     console.log("HOME INIT");
   }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { PostService } from 'src/app/core/services/post/post.service';
 import { Post } from 'src/app/core/types/post/post.type';
 
@@ -8,15 +9,36 @@ import { Post } from 'src/app/core/types/post/post.type';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnDestroy {
 
 
   id: number = -1;
   post: Post | null = null;
+  private unsubscribe = new Subject<void>();
+
+
   constructor(private postService: PostService, private actRoute: ActivatedRoute){}
 
+  ngOnDestroy(): void {
+    console.log("destroy");
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
   ngOnInit(): void {
     this.id = this.actRoute.snapshot.params['id'];
+
+    this.postService.posts$.pipe(takeUntil(this.unsubscribe)).subscribe((posts:Post[] | null)=>{
+      const post = this.postService.getSinglePostById(this.id);
+      if(post === null){
+       console.log("postok lekérése");
+       this.postService.getAllPosts()
+      }else if(post === undefined){
+       alert("NINCS ILYEN POST");
+      }else{
+        console.log("post beállítás");
+       this.post = post;
+      }
+    });
 
 
     // VAN API 1 DB lekérdezésre
@@ -26,15 +48,7 @@ export class PostComponent implements OnInit {
 
      //NINCS API CSAK AZ ÖSSZES LEKÉRDEZÉSÉRE
 
-     const post = this.postService.getSinglePostById(this.id);
-     console.log(this.id);
-     if(post === null){
-      this.postService.getAllPosts()
-     }else if(post === undefined){
-      alert("NINCS ILYEN POST");
-     }else{
-      this.post = post;
-     }
+
 
 
 

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
 export class AppComponent {
   title = 'test';
 
@@ -15,7 +14,6 @@ export class AppComponent {
   navigateToHome():void{
     this.router.navigate(['home']);
   }
-
   navigateToLogin():void{
     this.router.navigate(['login']);
   }

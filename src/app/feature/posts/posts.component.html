@@ -3,7 +3,7 @@
   Kérjük várjon!
 </p>
 
-<table *ngIf="!loading">
+<table *ngIf="!loading && errorMsg == '' ">
   <tr>
     <td>
       ID
@@ -33,4 +33,8 @@
     <td><button (click)="editPost(post)">Szerkesztés</button></td>
   </tr>
 </table>
+
+<p *ngIf="errorMsg !== ''">
+{{errorMsg}}
+</p>
 

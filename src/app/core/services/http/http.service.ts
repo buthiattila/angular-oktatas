@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LoginApi, LoginResponse } from '../../types/api/login-api.type';
-import { RegistrationApi, RegistrationResponse } from '../../types/api/registration-api.type';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Post, PostResponse } from '../../types/post/post.type';
 
 @Injectable({
@@ -13,16 +12,20 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  postLogin(dataToPost:LoginApi):Observable<LoginResponse> {
+  postLogin(dataToPost:LoginApi):Observable<LoginResponse>{
     return this.postRequest(environment.api.login, dataToPost);
   }
 
-  postRegistration(dataToPost:RegistrationApi):Observable<RegistrationResponse>{
-    return this.postRequest(environment.api.registration, dataToPost);
-  }
-
   getAllPosts():Observable<PostResponse>{
-    return this.getRequest(environment.api.posts);
+    return this.getRequest(environment.api.posts).pipe(
+      catchError((err)=>{
+
+        console.log("err captured in GET ALL POST service");
+        console.log(err);
+
+      return throwError(() => "HIBA");
+    })
+    );
   }
 
   getSinglePost(id:number):Observable<Post>{
@@ -30,7 +33,15 @@ export class HttpService {
   }
 
   private getRequest(path:string): Observable<any>{
-    return this.http.get(environment.api.apiBaseUrl+path);
+    return this.http.get(environment.api.apiBaseUrl+path).pipe(
+      catchError((err)=>{
+
+          console.log("err captured in service");
+          console.log(err);
+
+        return throwError(() => "HIBA");
+      })
+    );
   }
 
   private postRequest(path: string, dataToPost?:any):Observable<any>{

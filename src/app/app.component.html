@@ -1,13 +1,13 @@
+
 <div id="header">
-  <a [routerLink]="['']">HOME</a>
+  <a [routerLink]="['']" >HOME</a>
   <a [routerLink]="['login']">Bejelentkezés</a>
-  <a [routerLink]="['registration']">Regisztráció</a>
-  <span (click)="navigateToHome()" style="display: none">HOME</span>
-  <span (click)="navigateToLogin()" style="display: none">Bejelentkezés</span>
+  <span (click)="navigateToHome()"  >HOME</span>
+  <span (click)="navigateToLogin()">Bejelentkezés</span>
 </div>
 
 <router-outlet></router-outlet>
 
 <div id="footer">
-  <p> All rights reserved.</p>
+<p> All rights reserved.</p>
 </div>
