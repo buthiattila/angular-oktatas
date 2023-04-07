@@ -1,0 +1,60 @@
+// @use 'sass:map'; - érdemes használni, de picit lassíthatja a stílus átfordítását
+// @use "valami"; - változók felhasználása a "valami" style fájlból. Ilyenkor "valami".$gb_color -al lehet felhasználni a változót.
+// @import "valami.scss"; - saját style fájl importálás
+
+$bg_color: green !default; // alapértelmezett változó
+$bg_color: blue; //változó
+
+.red-background {
+  $bg_color: red; //változó felülírása csak ebben az osztályban (kapcsoszárójelen belül)
+  background-color: $bg_color;
+
+  button {
+    background-color: black;
+    color: white;
+
+    &:hover {
+      background-color: lightgrey;
+    }
+  }
+}
+
+// előre definiált összeállítása és felhasználása
+@mixin colors($bgColor:purple,$textColor:#e7dede) {
+  background-color: $bgColor;
+  color: $textColor;
+}
+
+button {
+  @include colors(red, white);
+}
+
+// funkciók készítése és felhasználása
+$height: 100px;
+@function half_height() {
+  @return $height / 2;
+}
+
+.valami {
+  height: half_height();
+}
+
+// logika alapján változók beállítása és felhasználása
+$theme: 'light';
+%theme_color {
+  @if $theme == 'light' {
+    @include colors(white, black);
+  }
+}
+
+button {
+  @extend %theme_color;
+}
+
+// foreach használata
+$array: 2 4 8 16 32;
+@each $value in $array {
+  .padding-#{$value} {
+    padding: #{$value}px;
+  }
+}
