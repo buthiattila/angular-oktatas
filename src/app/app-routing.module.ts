@@ -5,9 +5,14 @@ import { HomeComponent } from './feature/home/home.component';
 import { LoginComponent } from './feature/login/login.component';
 import { PostComponent } from './feature/post/post.component';
 import { PostsComponent } from './feature/posts/posts.component';
+import { InfoComponent } from './info/info.component';
 
 const routes: Routes = [
 
+  {
+    path: 'info',
+    component: InfoComponent
+  },
   {
     path: 'home',
     component: HomeComponent

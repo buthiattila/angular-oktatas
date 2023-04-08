@@ -1,1 +1,18 @@
-<p>info works!</p>
+<p>HTML segítségek:</p>
+<p>teszt tartalom paraméterből: {{teszt_parameter}}</p>
+<p>
+  Esemény atríbutumot sima zárójellel tudunk kezelni:<br>
+  <button (click)="buttonClicked()">onClick gomb</button><br>
+</p>
+<p>
+  HTML atríbutumot kapcsos zárójellel tudunk kezelni:<br>
+  <button [disabled]="shouldDisable">Disabled gomb paraméterből</button><br>
+  <span [class]="classByLogic === 'ok' ? 'ez-az-oszaly':'az-az-oszaly'">Osztály paraméter alapján</span>
+</p>
+<p>
+  kétoldali Bind kommunkációhoz '@angular/forms'-t importálni az app.module-ba<br>
+  az inputba írva leküldi angularnak hogy ezzel teendő van az inputChange metódus alapján<br>
+  <input [(ngModel)]="inputValueOld" (change)="inputChange()" name="teszt_input" id="teszt_input"><br>
+  <span>{{inputValueNew}}</span>
+</p>
+

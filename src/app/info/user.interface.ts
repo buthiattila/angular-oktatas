@@ -1,9 +1,10 @@
 /**
  * INFO:
  * Meghatározza, hogy egy adott típus milyen paramétereket milyen azonossággal kell kötelezően tartalmaznia
+ * az első betűt ajánlatos nagy I-vel kezdeni, hogy azonnal látszódjon, hogy interface-ről van szó
  */
 
-interface User {
+export interface IUser {
   id: number,
   username: string,
   email: string,

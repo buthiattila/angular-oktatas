@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 
+import {IValidator} from './validator.interface';
+
 /**
  * INFO:
  * A service független, bármikor bármilyen komponens vagy interface használhatja, nem specifikus és nem függ semmitől
@@ -8,16 +10,15 @@ import {Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class ValidatorService {
-  // változó (alap) típusok: string | number | boolean | undefined | null | symbol | bigint
-  // visszatérési típusok: void, any, string, number, boolean...
-
-  private valtozo: string = 'valami';
-  private readonly valtozo4: any = undefined; // readonly-csak a constructor-ban írható felül
-  protected valtozo2: string | number = 20;
-  public valtozo3: object = {};
+export class ValidatorService implements IValidator {
 
   constructor() {
+
+  }
+
+  test() {
+    // EZT a funkciót kötelezően kell tartalmaznia, mert az imlementált interface tartalmazza
+    // KÉRDÉS: ha az interface-n van paraméter, itt miért nem adhatok meg? az interface csak paraméterazonosságokat tartalmazhat?
   }
 
   /**
