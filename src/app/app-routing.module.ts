@@ -6,12 +6,17 @@ import { LoginComponent } from './feature/login/login.component';
 import { PostComponent } from './feature/post/post.component';
 import { PostsComponent } from './feature/posts/posts.component';
 import { InfoComponent } from './info/info.component';
+import { ImageSliderComponent } from './shared/image-slider/image-slider.component';
 
 const routes: Routes = [
 
   {
     path: 'info',
     component: InfoComponent
+  },
+  {
+    path: 'slider',
+    component: ImageSliderComponent
   },
   {
     path: 'home',

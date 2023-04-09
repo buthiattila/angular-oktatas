@@ -1,0 +1,10 @@
+<div class="slider">
+  <ng-container *ngFor="let slide of slides;let sliderIndex=index">
+    <div class="slide bg-img1" *ngIf="currentIndex == sliderIndex" [ngStyle]="{'background-image':'url('+slide.url+')'}">{{slide.title}}</div>
+  </ng-container>
+
+    <div class="arrow-container">
+      <div class="arrow left-arrow" (click)="slidePrev()"> <</div>
+      <div class="arrow right-arrow" (click)="slideNext()"> ></div>
+    </div>
+</div>

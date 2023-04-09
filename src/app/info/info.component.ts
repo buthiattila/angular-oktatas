@@ -22,6 +22,14 @@ export class InfoComponent {
   classByLogic: string = 'ok';
   inputValueOld: string = 'ez a régi érték';
   inputValueNew: string = '';
+  currentSlideIndex: number = 0;
+  slides:string[] = [
+    'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__480.jpg',
+    'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg',
+    'https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg',
+    'https://images3.alphacoders.com/130/thumbbig-1301279.jpg',
+    'https://img.freepik.com/free-photo/galaxy-nature-aesthetic-background-starry-sky-mountain-remixed-media_53876-126761.jpg'
+  ];
 
   buttonClicked(): void {
     this.shouldDisable = !this.shouldDisable;

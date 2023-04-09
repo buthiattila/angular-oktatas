@@ -11,6 +11,7 @@ import {LoginComponent} from './feature/login/login.component';
 import {PostsComponent} from './feature/posts/posts.component';
 import {PostComponent} from './feature/post/post.component';
 import {InfoComponent} from './info/info.component';
+import { ImageSliderComponent } from './shared/image-slider/image-slider.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {InfoComponent} from './info/info.component';
     LoginComponent,
     PostsComponent,
     PostComponent,
-    InfoComponent
+    InfoComponent,
+    ImageSliderComponent
   ],
   imports: [
     BrowserModule,

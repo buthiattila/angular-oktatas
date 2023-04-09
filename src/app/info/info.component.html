@@ -2,11 +2,13 @@
 <p>teszt tartalom paraméterből: {{teszt_parameter}}</p>
 <p>
   Esemény atríbutumot sima zárójellel tudunk kezelni:<br>
-  <button (click)="buttonClicked()">onClick gomb</button><br>
+  <button (click)="buttonClicked()">onClick gomb</button>
+  <br>
 </p>
 <p>
   HTML atríbutumot kapcsos zárójellel tudunk kezelni:<br>
-  <button [disabled]="shouldDisable">Disabled gomb paraméterből</button><br>
+  <button [disabled]="shouldDisable">Disabled gomb paraméterből</button>
+  <br>
   <span [class]="classByLogic === 'ok' ? 'ez-az-oszaly':'az-az-oszaly'">Osztály paraméter alapján</span>
 </p>
 <p>
@@ -15,4 +17,24 @@
   <input [(ngModel)]="inputValueOld" (change)="inputChange()" name="teszt_input" id="teszt_input"><br>
   <span>{{inputValueNew}}</span>
 </p>
+<p>
+  Feltételhez kötött class:<br>
+  <span [ngClass]="{'active':currentSlideIndex == 0}">tartalom</span>
+</p>
+<p>
+  Feltételhez kötött megjelenés angularból (így a webvizsgálóba sem kerül be, ha épp nem kell):<br>
+  <span *ngif="currentSlideIndex == 0">tartalom</span>
+</p>
+<p>
+  Style angulatból:<br>
+  <span [ngStyle]="{'background-image':'url('+slides[currentSlideIndex]+')'}">tartalom</span>
+</p>
+
+<div>
+  For ciklus angulatból:<br>
+  <ng-container *ngFor="let slide of slides;let sliderIndex=index">
+    <div class="slide bg-img1" *ngIf="currentSlideIndex == sliderIndex"
+         [ngStyle]="{'background-image':'url('+slide+')'}">{{currentSlideIndex}}</div>
+  </ng-container>
+</div>
 
