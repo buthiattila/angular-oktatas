@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {ImageSlide} from "./shared/image-slider/image-slider.type";
+
 import {ImageSliderService} from "./shared/image-slider/image-slider.service";
 
 @Component({
@@ -11,7 +11,7 @@ import {ImageSliderService} from "./shared/image-slider/image-slider.service";
 export class AppComponent {
   title = 'test';
 
-  constructor(private router: Router, public readonly slideService:ImageSliderService) {
+  constructor(private router: Router, public readonly slideService: ImageSliderService) {
 
   }
 

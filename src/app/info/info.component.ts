@@ -1,5 +1,7 @@
 import {Component, SimpleChanges} from '@angular/core';
 
+import {UserService} from "../core/services/user/user.service";
+
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -17,6 +19,7 @@ export class InfoComponent {
 
   array: [string, string, number] = ['valami', 'semmi', 1]; // 3 elemű tömb esetén előre definiálva az elemek típusai
 
+  userId: number = 101;
   teszt_parameter: string = 'átadott paraméter1';  // interpoláció
   shouldDisable: boolean = false;
   classByLogic: string = 'ok';
@@ -31,6 +34,10 @@ export class InfoComponent {
     'https://img.freepik.com/free-photo/galaxy-nature-aesthetic-background-starry-sky-mountain-remixed-media_53876-126761.jpg'
   ];
 
+  constructor(public readonly userService: UserService) {
+
+  }
+
   buttonClicked(): void {
     this.shouldDisable = !this.shouldDisable;
     this.inputValueNew = 'ez az új érték gombnyomásra';
@@ -38,6 +45,13 @@ export class InfoComponent {
 
   inputChange(): void {
     console.log('átírt érték bevitelre');
+  }
+
+  getUser(): void {
+    //Felhasnáló lekérdezése backend szerverről
+    this.userService.getUser(this.userId).then(function (res: any) {
+      console.log(res);
+    });
   }
 
   ngOnInit(): void {

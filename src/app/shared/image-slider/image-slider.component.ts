@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 
-import {ImageSlide} from "./image-slider.type";
 import {ImageSliderService} from "./image-slider.service";
 
 @Component({

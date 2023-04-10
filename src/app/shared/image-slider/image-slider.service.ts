@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+
 import {ImageSlide} from "./image-slider.type";
 
 @Injectable({
