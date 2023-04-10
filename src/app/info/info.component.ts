@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-info',
@@ -38,6 +38,38 @@ export class InfoComponent {
 
   inputChange(): void {
     console.log('átírt érték bevitelre');
+  }
+
+  ngOnInit(): void {
+    console.log('inicializáláskor fut le');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('változáskor fut le');
+  }
+
+  ngGoCheck() {
+    console.log('check');
+  }
+
+  ngAfterContentInit() {
+    console.log('after init');
+  }
+
+  ngAfterContentCheck() {
+    console.log('after check');
+  }
+
+  ngAfterViewInit() {
+    console.log('view inicializálás után fut le');
+  }
+
+  ngAfterViewChecked() {
+    console.log('view ellenőrzés után fut le');
+  }
+
+  ngOnDestroy() {
+    console.log('komponens törlődésekor fut le (pl elnavigáláskor)');
   }
 
 }

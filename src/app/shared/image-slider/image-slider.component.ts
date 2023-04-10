@@ -1,5 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
+
 import {ImageSlide} from "./image-slider.type";
+import {ImageSliderService} from "./image-slider.service";
 
 @Component({
   selector: 'app-image-slider',
@@ -8,77 +10,34 @@ import {ImageSlide} from "./image-slider.type";
 })
 export class ImageSliderComponent {
 
-  @Input() slides: ImageSlide[] = [];
   @Output() slideSelected: EventEmitter<number> = new EventEmitter<number>();
-  @Input() shouldGetIndex: boolean = false;
-  maxIndex: number = 0;
-  minIndex: number = 0;
-  currentIndex: number = 0;
+  @Input() triggerIndex: number = 0;
 
-  ngOnChanges() {
-    console.log('változáskor fut le');
+  constructor(public readonly slideService: ImageSliderService) {
   }
 
-  ngGoCheck() {
-    console.log('check');
-  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // csak akkor fusson, le ha nem első változáskor fut le (pl inicializálás)
 
-  ngAfterContentInit() {
-    console.log('after init');
-  }
-
-  ngAfterContentCheck() {
-    console.log('after check');
-  }
-
-  ngOnInit() {
-    console.log('inicializáláskor fut le');
-  }
-
-  ngAfterViewInit() {
-    console.log('view inicializálás után fut le');
-  }
-
-  ngAfterViewChecked() {
-    console.log('view ellenőrzés után fut le');
-  }
-
-  ngOnDestroy() {
-    console.log('komponens törlődésekor fut le (pl elnavigáláskor)');
-  }
-
-  setMaxIndex(): void {
-    if (this.maxIndex == 0) {
-      this.maxIndex = this.slides.length - 1;
+    if (changes['triggerIndex'] && !changes['triggerIndex'].firstChange) {
+      this.emitSlideIndex();
     }
   }
 
   slidePrev(): void {
-    this.setMaxIndex();
-
-    if (this.currentIndex > this.minIndex) {
-      this.currentIndex--;
-    } else {
-      this.currentIndex = this.maxIndex;
-    }
+    this.slideService.slidePrev();
   }
 
   slideNext(): void {
-    this.setMaxIndex();
-
-    if (this.currentIndex < this.maxIndex) {
-      this.currentIndex++;
-    } else {
-      this.currentIndex = this.minIndex;
-    }
+    this.slideService.slideNext();
   }
 
   slideTo(targetIndex: number): void {
-    this.currentIndex = targetIndex;
+    this.slideService.slideTo(targetIndex);
   }
 
-  slideClicked(targetIndex: number): void {
-    this.slideSelected.emit(targetIndex);
+  emitSlideIndex(targetIndex?: number): void {
+    this.slideSelected.emit((targetIndex) ? targetIndex : this.slideService.getCurrentIndex());
   }
 
 }

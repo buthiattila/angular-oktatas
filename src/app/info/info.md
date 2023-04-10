@@ -8,7 +8,7 @@
    3. EventEmitter (emit()) esemény lekezelése,
    4. LifeCycleEvent: ngOnInit, ngOnChanges, ngGoCheck, ngAfterContentInit, ngAfterContentCheck, ngAfterViewChecked, ngOnDestroy
    5. direktívák, ElementRef, HostListener
-6. video:
+6. video: eventek,service-k
 7. video:
 8. video:
 9. video:
@@ -16,3 +16,4 @@
 
 ha egy modul komponensét a modulon kívül is szeretnénk használni, akkor a "providers" tömbbe is be kell rakni az adott
 modult
+valtozo?:string -> ha ? jel van, akkor nem kötelező paraméter!

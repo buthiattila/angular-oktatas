@@ -13,6 +13,7 @@ import {PostComponent} from './feature/post/post.component';
 import {InfoComponent} from './info/info.component';
 import {ImageSliderComponent} from './shared/image-slider/image-slider.component';
 import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.directive';
+import {SelectButtonComponent} from './shared/select-button/select-button.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.
     PostComponent,
     InfoComponent,
     ImageSliderComponent,
-    HoverHighlightDirective
+    HoverHighlightDirective,
+    SelectButtonComponent
   ],
   imports: [
     BrowserModule,

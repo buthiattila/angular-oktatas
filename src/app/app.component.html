@@ -7,8 +7,9 @@
 
 <router-outlet></router-outlet>
 
-<app-image-slider [slides]="slides" (slideSelected)="getSelectedSlide($event)" [shouldGetIndex]="shouldGetIndex"></app-image-slider>
-<p>{{(selectedIndex !== null) ? slides[selectedIndex].desc : ''}}</p>
+<app-image-slider (slideSelected)="getSelectedSlide($event)" [triggerIndex]="slideService.getTriggerIndex()"></app-image-slider>
+<p>{{(selectedIndex !== null) ? slideService.getSlides()[selectedIndex].desc : ''}}</p>
+<app-select-button></app-select-button>
 
 <div id="footer">
   <p> All rights reserved.</p>
