@@ -5,5 +5,6 @@
 
 export type ImageSlide = {
   title: string,
-  url: string
+  url: string,
+  desc: string
 }

@@ -1,13 +1,15 @@
-
 <div id="header">
-  <a [routerLink]="['']" >HOME</a>
+  <a [routerLink]="['']">HOME</a>
   <a [routerLink]="['login']">Bejelentkezés</a>
-  <span (click)="navigateToHome()"  >HOME</span>
+  <span (click)="navigateToHome()">HOME</span>
   <span (click)="navigateToLogin()">Bejelentkezés</span>
 </div>
 
 <router-outlet></router-outlet>
-<app-image-slider></app-image-slider>
+
+<app-image-slider [slides]="slides" (slideSelected)="getSelectedSlide($event)" [shouldGetIndex]="shouldGetIndex"></app-image-slider>
+<p>{{(selectedIndex !== null) ? slides[selectedIndex].desc : ''}}</p>
+
 <div id="footer">
-<p> All rights reserved.</p>
+  <p> All rights reserved.</p>
 </div>

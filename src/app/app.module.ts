@@ -11,7 +11,8 @@ import {LoginComponent} from './feature/login/login.component';
 import {PostsComponent} from './feature/posts/posts.component';
 import {PostComponent} from './feature/post/post.component';
 import {InfoComponent} from './info/info.component';
-import { ImageSliderComponent } from './shared/image-slider/image-slider.component';
+import {ImageSliderComponent} from './shared/image-slider/image-slider.component';
+import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ImageSliderComponent } from './shared/image-slider/image-slider.compone
     PostsComponent,
     PostComponent,
     InfoComponent,
-    ImageSliderComponent
+    ImageSliderComponent,
+    HoverHighlightDirective
   ],
   imports: [
     BrowserModule,

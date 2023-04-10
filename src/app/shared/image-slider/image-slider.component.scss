@@ -30,4 +30,19 @@
       }
     }
   }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+
+    .dot {
+      color: black;
+      cursor: pointer;
+      font-size: 60px;
+
+      &.active {
+        color: red;
+      }
+    }
+  }
 }

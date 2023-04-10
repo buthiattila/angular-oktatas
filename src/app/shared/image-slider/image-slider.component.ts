@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ImageSlide} from "./image-slider.type";
 
 @Component({
@@ -8,33 +8,54 @@ import {ImageSlide} from "./image-slider.type";
 })
 export class ImageSliderComponent {
 
-  slides:ImageSlide[] = [
-    {
-      'title':'valami',
-      'url':'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__480.jpg'
-    },
-    {
-      'title':'valami',
-      'url':'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832__340.jpg'
-    },
-    {
-      'title':'valami',
-      'url':'https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-thumb.jpg'
-    },
-    {
-      'title':'valami',
-      'url':'https://images3.alphacoders.com/130/thumbbig-1301279.jpg'
-    },
-    {
-      'title':'valami',
-      'url':'https://img.freepik.com/free-photo/galaxy-nature-aesthetic-background-starry-sky-mountain-remixed-media_53876-126761.jpg'
-    }
-  ];
-  currentIndex: number = 0;
+  @Input() slides: ImageSlide[] = [];
+  @Output() slideSelected: EventEmitter<number> = new EventEmitter<number>();
+  @Input() shouldGetIndex: boolean = false;
+  maxIndex: number = 0;
   minIndex: number = 0;
-  maxIndex: number = (this.slides.length - 1);
+  currentIndex: number = 0;
+
+  ngOnChanges() {
+    console.log('változáskor fut le');
+  }
+
+  ngGoCheck() {
+    console.log('check');
+  }
+
+  ngAfterContentInit() {
+    console.log('after init');
+  }
+
+  ngAfterContentCheck() {
+    console.log('after check');
+  }
+
+  ngOnInit() {
+    console.log('inicializáláskor fut le');
+  }
+
+  ngAfterViewInit() {
+    console.log('view inicializálás után fut le');
+  }
+
+  ngAfterViewChecked() {
+    console.log('view ellenőrzés után fut le');
+  }
+
+  ngOnDestroy() {
+    console.log('komponens törlődésekor fut le (pl elnavigáláskor)');
+  }
+
+  setMaxIndex(): void {
+    if (this.maxIndex == 0) {
+      this.maxIndex = this.slides.length - 1;
+    }
+  }
 
   slidePrev(): void {
+    this.setMaxIndex();
+
     if (this.currentIndex > this.minIndex) {
       this.currentIndex--;
     } else {
@@ -43,11 +64,21 @@ export class ImageSliderComponent {
   }
 
   slideNext(): void {
+    this.setMaxIndex();
+
     if (this.currentIndex < this.maxIndex) {
       this.currentIndex++;
     } else {
       this.currentIndex = this.minIndex;
     }
+  }
+
+  slideTo(targetIndex: number): void {
+    this.currentIndex = targetIndex;
+  }
+
+  slideClicked(targetIndex: number): void {
+    this.slideSelected.emit(targetIndex);
   }
 
 }
