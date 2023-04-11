@@ -14,6 +14,7 @@ import {InfoComponent} from './info/info.component';
 import {ImageSliderComponent} from './shared/image-slider/image-slider.component';
 import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.directive';
 import {SelectButtonComponent} from './shared/select-button/select-button.component';
+import {RegistrationComponent} from './feature/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {SelectButtonComponent} from './shared/select-button/select-button.compon
     InfoComponent,
     ImageSliderComponent,
     HoverHighlightDirective,
-    SelectButtonComponent
+    SelectButtonComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
