@@ -1,0 +1,17 @@
+<h1>Bejelentkezés</h1>
+
+<form [formGroup]="loginForm">
+  <div>
+    <label for="userName">Felhasználónév</label>
+    <input type="text" class="form-control" id="userName" formControlName="userName">
+  </div>
+  <div>
+    <label for="password">Keresztnév</label>
+    <input type="password" class="form-control" id="password" formControlName="password">
+  </div>
+  <div>
+    <label for="isCompany">Cég vagy?</label>
+    <input id="isCompany" type="checkbox" formControlName="isCompany">
+  </div>
+  <button type="submit" (click)="login()">Bejelentkezés</button>
+</form>

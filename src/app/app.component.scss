@@ -1,23 +1,32 @@
 #header {
   width: 100%;
   height: 50px;
-  background-color: lightblue;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #563d7c;
 
   a {
-    padding: 30px;
-  }
+    padding-right: .5rem;
+    padding-left: .5rem;
+    color: #cbbde2;
+    text-decoration: none;
+    background-color: transparent;
 
-  span {
-    padding: 30px;
-    cursor: pointer;
+    &:hover {
+      color: #FFFFFF;
+    }
   }
 }
 
 #footer {
-  margin-top:50px;
-  height: 150px;
-  background-color: black;
-  color: white;
+  margin-top: 50px;
   width: 100%;
-
+  height: 50px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #322348;
+  color: #FFFFFF;
+  font-weight: 900;
 }

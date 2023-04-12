@@ -9,8 +9,6 @@ import {ImageSliderService} from "../../shared/image-slider/image-slider.service
 })
 export class HomeComponent implements OnInit, OnDestroy{
 
-  value = 'Clear me';
-
   constructor(public readonly slideService: ImageSliderService) {
   }
 
@@ -21,7 +19,6 @@ export class HomeComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     console.log("HOME DESTORY");
   }
-
 
   selectedIndex: number | null = null;
 

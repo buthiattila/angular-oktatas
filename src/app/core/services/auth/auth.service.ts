@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginApi, LoginResponse } from '../../types/api/login-api.type';
-import { LoginAuth } from '../../types/auth/login-auth.type';
+import {LoginApi,LoginResponse} from 'src/app/core/types/account/login-api.type';
+import {LoginAuth} from 'src/app/core/types/account/login-auth.type';
 import { HttpService } from '../http/http.service';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private httpSerivce: HttpService) { }
 
   login(loginData:LoginAuth):Observable<LoginResponse>{
-    this.isCompany = loginData.login_isCompany;
+    this.isCompany = loginData.isCompany;
     return this.httpSerivce.postLogin(this.mapLoginDataToLoginApiData(loginData))
   }
 
@@ -27,8 +27,8 @@ export class AuthService {
 
   private mapLoginDataToLoginApiData(loginData:LoginAuth): LoginApi{
     return {
-      username:loginData.login_username,
-      password: loginData.login_password
+      username:loginData.username,
+      password: loginData.password
     }
   }
 }

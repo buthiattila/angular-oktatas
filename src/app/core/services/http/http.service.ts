@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoginApi, LoginResponse } from '../../types/api/login-api.type';
+import { LoginApi, LoginResponse } from 'src/app/core/types/account/login-api.type';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';

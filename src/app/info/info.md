@@ -9,8 +9,8 @@
    4. LifeCycleEvent: ngOnInit, ngOnChanges, ngGoCheck, ngAfterContentInit, ngAfterContentCheck, ngAfterViewChecked, ngOnDestroy
    5. direktívák, ElementRef, HostListener
 6. video: eventek,service-k
-7. video: formok, promise-k
-8. video:
+7. video: formok, promise-k, regisztráció
+8. video: router, login
 9. video:
 10. video:
 11. video:
