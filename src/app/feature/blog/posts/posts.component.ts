@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
-import {PostService} from 'src/app/core/services/post/post.service';
-import {Post, PostResponse} from 'src/app/core/types/post/post.type';
+import {PostService} from 'src/app/core/services/blog/post.service';
+import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
 
 @Component({
   selector: 'app-posts',
@@ -23,8 +23,6 @@ export class PostsComponent implements OnInit {
   }
 
   private init() {
-    //API
-
     this.loading = true;
     this.postService.getAllPostsToComponent().subscribe({
       next: (response: PostResponse) => {
@@ -36,7 +34,7 @@ export class PostsComponent implements OnInit {
         this.loading = false;
         this.errorMsg = err
       }
-    })
+    });
 
     // this.postService.getAllPosts();
     //SUBS

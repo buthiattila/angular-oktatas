@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 
-import {Post, PostResponse} from 'src/app/core/types/post/post.type';
-import {HttpService} from '../http/http.service';
+import {HttpService} from 'src/app/core/services/http/http.service';
+import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private httService: HttpService) {
-  }
-
   private posts = new BehaviorSubject<Post[] | null>(null);
   posts$ = this.posts.asObservable();
+
+  constructor(private httService: HttpService) {
+  }
 
   getAllPosts(): void {
     this.httService.getAllPosts().subscribe((response: PostResponse) => {

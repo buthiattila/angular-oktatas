@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { PostService } from 'src/app/core/services/post/post.service';
-import { Post } from 'src/app/core/types/post/post.type';
+import { PostService } from 'src/app/core/services/blog/post.service';
+import { Post } from 'src/app/core/types/blog/post.type';
 
 @Component({
   selector: 'app-post',
@@ -10,7 +10,6 @@ import { Post } from 'src/app/core/types/post/post.type';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit, OnDestroy {
-
 
   id: number = -1;
   post: Post | null = null;

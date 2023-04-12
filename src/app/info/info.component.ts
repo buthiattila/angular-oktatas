@@ -1,7 +1,5 @@
 import {Component, SimpleChanges} from '@angular/core';
 
-import {UserService} from "../core/services/user/user.service";
-
 @Component({
   selector: 'app-info',
   templateUrl: './info.component.html',
@@ -34,7 +32,7 @@ export class InfoComponent {
     'https://img.freepik.com/free-photo/galaxy-nature-aesthetic-background-starry-sky-mountain-remixed-media_53876-126761.jpg'
   ];
 
-  constructor(public readonly userService: UserService) {
+  constructor() {
 
   }
 
@@ -45,13 +43,6 @@ export class InfoComponent {
 
   inputChange(): void {
     console.log('átírt érték bevitelre');
-  }
-
-  getUser(): void {
-    //Felhasnáló lekérdezése backend szerverről
-    this.userService.getUser(this.userId).then(function (res: any) {
-      console.log(res);
-    });
   }
 
   ngOnInit(): void {

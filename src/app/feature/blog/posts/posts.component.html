@@ -1,40 +1,27 @@
-
-<p *ngIf="loading">
-  Kérjük várjon!
-</p>
+<p *ngIf="loading">Kérjük várjon!</p>
+<p *ngIf="errorMsg !== ''">{{errorMsg}}</p>
 
 <table *ngIf="!loading && errorMsg == '' ">
+  <thead>
   <tr>
-    <td>
-      ID
-    </td>
-    <td>
-      Cím
-    </td>
-    <td>
-      Szöveg
-    </td>
-    <td>
-      Tagek
-    </td>
-    <td>
-      Reakciók
-    </td>
-    <td>
-      ....
-    </td>
+    <th>ID</th>
+    <th>Cím</th>
+    <th>Szöveg</th>
+    <th>Tagek</th>
+    <th>Reakciók</th>
+    <th>....</th>
   </tr>
+  </thead>
+  <tbody>
   <tr *ngFor="let post of posts">
     <td>{{post.id}}</td>
     <td>{{post.title}}</td>
     <td>{{post.body}}</td>
     <td>{{post.tags}}</td>
     <td>{{post.reactions}}</td>
-    <td><button (click)="editPost(post)">Szerkesztés</button></td>
+    <td>
+      <button (click)="editPost(post)">Szerkesztés</button>
+    </td>
   </tr>
+  </tbody>
 </table>
-
-<p *ngIf="errorMsg !== ''">
-{{errorMsg}}
-</p>
-

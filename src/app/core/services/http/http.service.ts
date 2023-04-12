@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, catchError, throwError} from 'rxjs';
 
-import {LoginApi, LoginResponse} from 'src/app/core/types/account/login.type';
-import {Post, PostResponse} from 'src/app/core/types/post/post.type';
 import {environment} from 'src/environments/environment';
-import {RegistrationApi, RegistrationResponse} from "../../types/account/registration.type";
+import {RegistrationApi, RegistrationResponse} from "src/app/core/types/account/registration.type";
+import {LoginApi, LoginResponse} from 'src/app/core/types/account/login.type';
+import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
 
 @Injectable({
   providedIn: 'root'
