@@ -3,8 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {AuthService} from 'src/app/core/services/auth/auth.service';
-import {LoginResponse} from 'src/app/core/types/account/login-api.type';
-import {LoginAuth} from 'src/app/core/types/account/login-auth.type';
+import {LoginAuth,LoginResponse} from 'src/app/core/types/account/login.type';
 
 @Component({
   selector: 'app-login',
@@ -17,25 +16,27 @@ export class LoginComponent {
 
   constructor(private authSerivce: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
-      userName: new FormControl("kminchelle", [Validators.required]),
+      username: new FormControl("kminchelle", [Validators.required]),
       password: new FormControl("0lelplR", [Validators.required]),
       isCompany: new FormControl(null)
     });
   }
 
-  login() {
+  formSave():void {
     if (this.loginForm.valid) {
       const formData: LoginAuth = this.loginForm.value;
+
       this.authSerivce.login(formData).subscribe((res: LoginResponse) => {
         if (res.id) {
           this.authSerivce.initUser(res);
           this.router.navigate(['posts']);
         } else {
-          alert("HIBA!");
+          alert("A felhasználónév vagy jelszó nem megfelelő!");
         }
       });
+    } else {
+      alert("Nem megfelelő adatkitöltés!");
     }
   }
-
 
 }

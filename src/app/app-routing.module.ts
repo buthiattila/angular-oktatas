@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {AuthGuardService} from './core/services/guards/auth-guard/auth-guard.service';
+import {AuthGuardService} from './core/services/auth/auth-guard.service';
 import {HomeComponent} from './feature/home/home.component';
 import {InfoComponent} from './info/info.component';
 import {RegistrationComponent} from "./feature/account/registration/registration.component";

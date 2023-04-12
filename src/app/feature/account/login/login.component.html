@@ -2,8 +2,8 @@
 
 <form [formGroup]="loginForm">
   <div>
-    <label for="userName">Felhasználónév</label>
-    <input type="text" class="form-control" id="userName" formControlName="userName">
+    <label for="username">Felhasználónév</label>
+    <input type="text" class="form-control" id="username" formControlName="username">
   </div>
   <div>
     <label for="password">Keresztnév</label>
@@ -13,5 +13,5 @@
     <label for="isCompany">Cég vagy?</label>
     <input id="isCompany" type="checkbox" formControlName="isCompany">
   </div>
-  <button type="submit" (click)="login()">Bejelentkezés</button>
+  <button type="submit" (click)="formSave()">Bejelentkezés</button>
 </form>

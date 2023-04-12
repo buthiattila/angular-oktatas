@@ -13,3 +13,9 @@ export type LoginResponse = {
   image: string,
   token: string
 }
+
+export type LoginAuth = {
+  username: string,
+  password: string,
+  isCompany: boolean
+}
