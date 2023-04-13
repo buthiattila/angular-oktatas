@@ -32,9 +32,7 @@ export class InfoComponent {
     'https://img.freepik.com/free-photo/galaxy-nature-aesthetic-background-starry-sky-mountain-remixed-media_53876-126761.jpg'
   ];
 
-  constructor() {
-
-  }
+  constructor() {}
 
   buttonClicked(): void {
     this.shouldDisable = !this.shouldDisable;

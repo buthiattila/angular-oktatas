@@ -1,0 +1,9 @@
+<mat-toolbar color="primary" class="navbar">
+  <div>{{title}}</div>
+  <div>
+    <a class="nav-item" [routerLink]="['']">HOME</a>
+    <a class="nav-item" [routerLink]="['registration']">Regisztráció</a>
+    <a class="nav-item" [routerLink]="['login']">Bejelentkezés</a>
+    <span class="nav-item" (click)="logOut()">Kijelentkezés</span>
+  </div>
+</mat-toolbar>

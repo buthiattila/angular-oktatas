@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
 import {AuthGuardService} from './core/services/auth/auth-guard.service';
-import {HomeComponent} from './feature/home/home.component';
 import {InfoComponent} from './info/info.component';
+import {HomeComponent} from './feature/home/home.component';
 import {RegistrationComponent} from "./feature/account/registration/registration.component";
 import {LoginComponent} from './feature/account/login/login.component';
 import {PostsComponent} from './feature/blog/posts/posts.component';

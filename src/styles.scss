@@ -5,6 +5,7 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #303030;
 }
 
 .text-center {
@@ -17,6 +18,11 @@ body {
 
 .w-100 {
   width: 100% !important;
+}
+
+#page-content {
+  padding: 1rem;
+  margin: auto;
 }
 
 @keyframes spinner {

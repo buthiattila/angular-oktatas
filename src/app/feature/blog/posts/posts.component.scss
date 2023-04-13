@@ -1,3 +1,14 @@
 table {
   width: 100%;
+
+  th[mat-header-cell] {
+    background: #673ab7;
+    color: #FFFFFF;
+  }
+
+  td {
+    border: 1px solid #d0cfd0;
+  }
 }
+
+

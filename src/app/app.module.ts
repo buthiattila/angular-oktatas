@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -17,7 +17,8 @@ import {InfoComponent} from './info/info.component';
 import {ImageSliderComponent} from './shared/image-slider/image-slider.component';
 import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.directive';
 import {SelectButtonComponent} from './shared/select-button/select-button.component';
-
+import {NavbarComponent} from "./feature/navbar/navbar.component";
+import {FooterComponent} from "./feature/footer/footer.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import {SelectButtonComponent} from './shared/select-button/select-button.compon
     ImageSliderComponent,
     HoverHighlightDirective,
     SelectButtonComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

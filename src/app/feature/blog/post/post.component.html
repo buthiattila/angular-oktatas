@@ -1,16 +1,21 @@
 <div class="w-100 text-end">
   <button type="button" mat-raised-button color="primary" (click)="closePost()">Bezárás</button>
 </div>
-<p *ngIf="loading">
-  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
-</p>
 <p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
-<div *ngIf="post">
-  <div>ID: {{post.id}}</div>
-  <div>Cím: {{post.title}}</div>
-  <div>Szöveg: {{post.body}}</div>
-  <div>Tagek:
-    <span *ngFor="let tag of post.tags">{{tag}},</span>
-  </div>
-  <div>Reakciók: {{post.reactions}}</div>
-</div>
+
+<mat-card>
+  <mat-card-content>
+    <p *ngIf="loading">
+      <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+    </p>
+    <div *ngIf="post">
+      <div>ID: {{post.id}}</div>
+      <div>Cím: {{post.title}}</div>
+      <div>Szöveg: {{post.body}}</div>
+      <div>Tagek:
+        <span *ngFor="let tag of post.tags">{{tag}},</span>
+      </div>
+      <div>Reakciók: {{post.reactions}}</div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 export class RegistrationComponent {
 
   loading = false;
+  regForm: FormGroup;
 
   constructor(private authSerivce: AuthService, private router: Router) {
     this.regForm = new FormGroup({
@@ -22,8 +23,6 @@ export class RegistrationComponent {
       'age': new FormControl(250, [Validators.required, Validators.pattern('^[0-9]+$')]),
     });
   }
-
-  regForm: FormGroup;
 
   checkValue(formId: string): boolean {
     return this.regForm.controls[formId].invalid && (this.regForm.controls[formId].touched || this.regForm.controls[formId].dirty);
