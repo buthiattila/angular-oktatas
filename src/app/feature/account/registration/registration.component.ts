@@ -13,6 +13,8 @@ import {Router} from "@angular/router";
 })
 export class RegistrationComponent {
 
+  loading = false;
+
   constructor(private authSerivce: AuthService, private router: Router) {
     this.regForm = new FormGroup({
       'firstName': new FormControl("Muhammad", [Validators.required, Validators.minLength(3)]),
@@ -28,6 +30,8 @@ export class RegistrationComponent {
   }
 
   formSave(): void {
+    this.loading = true;
+
     if (this.regForm.valid) {
       const formData: RegistrationAuth = this.regForm.value;
 
@@ -35,10 +39,12 @@ export class RegistrationComponent {
         if (res.id) {
           this.router.navigate(['login']);
         } else {
+          this.loading = false;
           alert("A regisztráció nem sikerült!");
         }
       });
     } else {
+      this.loading = false;
       alert("Nem megfelelő adatkitöltés!");
     }
   }

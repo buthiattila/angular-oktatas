@@ -24,15 +24,7 @@ export class HttpService {
   }
 
   getAllPosts(): Observable<PostResponse> {
-    return this.getRequest(environment.api.posts).pipe(
-      catchError((err) => {
-
-        console.log("err captured in GET ALL POST service");
-        console.log(err);
-
-        return throwError(() => "HIBA");
-      })
-    );
+    return this.getRequest(environment.api.posts);
   }
 
   getSinglePost(id: number): Observable<Post> {
@@ -52,7 +44,15 @@ export class HttpService {
   }
 
   private postRequest(path: string, dataToPost?: any): Observable<any> {
-    return this.http.post(environment.api.apiBaseUrl + path, dataToPost);
+    return this.http.post(environment.api.apiBaseUrl + path, dataToPost).pipe(
+      catchError((err) => {
+
+        console.log("err captured in service");
+        console.log(err);
+
+        return throwError(() => "HIBA");
+      })
+    );
   }
 
 }

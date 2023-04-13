@@ -1,17 +1,28 @@
-<h1 class="text-center">Bejelentkezés</h1>
-
-<form [formGroup]="loginForm">
-  <div>
-    <label for="username">Felhasználónév</label>
-    <input type="text" class="form-control" id="username" formControlName="username">
-  </div>
-  <div>
-    <label for="password">Keresztnév</label>
-    <input type="password" class="form-control" id="password" formControlName="password">
-  </div>
-  <div>
-    <label for="isCompany">Cég vagy?</label>
-    <input id="isCompany" type="checkbox" formControlName="isCompany">
-  </div>
-  <button type="submit" (click)="formSave()">Bejelentkezés</button>
-</form>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Bejelentkezés</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="loginForm" class="example-form">
+      <mat-card-content>
+        <mat-form-field class="w-100">
+          <mat-label>Felhasználónév</mat-label>
+          <input matInput type="text" class="form-control" id="username" formControlName="username">
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label>Jelszó</mat-label>
+          <input matInput [type]="hidePassword ? 'password' : 'text'" class="form-control" id="password" formControlName="password">
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="text-center">
+          <mat-slide-toggle id="isCompany" formControlName="isCompany">Cég vagy?</mat-slide-toggle>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary" [class.btn-spinner]="loading" [disabled]="loading" class="example-full-width" (click)="formSave()">Bejelentkezés</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>

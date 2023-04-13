@@ -12,6 +12,8 @@ import {LoginAuth,LoginResponse} from 'src/app/core/types/account/login.type';
 })
 export class LoginComponent {
 
+  hidePassword = true;
+  loading = false;
   loginForm: FormGroup;
 
   constructor(private authSerivce: AuthService, private router: Router) {
@@ -23,6 +25,8 @@ export class LoginComponent {
   }
 
   formSave():void {
+    this.loading = true;
+
     if (this.loginForm.valid) {
       const formData: LoginAuth = this.loginForm.value;
 
@@ -31,10 +35,12 @@ export class LoginComponent {
           this.authSerivce.initUser(res);
           this.router.navigate(['posts']);
         } else {
+          this.loading = false;
           alert("A felhasználónév vagy jelszó nem megfelelő!");
         }
       });
     } else {
+      this.loading = false;
       alert("Nem megfelelő adatkitöltés!");
     }
   }

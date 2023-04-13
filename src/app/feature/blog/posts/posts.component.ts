@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 
 import {PostService} from 'src/app/core/services/blog/post.service';
 import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-posts',
@@ -27,12 +28,12 @@ export class PostsComponent implements OnInit {
 
     this.postService.getAllPostsToComponent().subscribe({
       next: (response: PostResponse) => {
-        this.posts = response.posts
+        this.posts = response.posts;
         this.loading = false;
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.loading = false;
-        this.errorMsg = err
+        this.errorMsg = err.message;
       }
     });
   }

@@ -1,4 +1,6 @@
-<p *ngIf="loading" class="text-center">Kérjük várjon!</p>
+<p *ngIf="loading">
+  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+</p>
 <p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
 
 <table *ngIf="!loading && errorMsg == '' ">
@@ -20,7 +22,9 @@
     <td>{{post.tags}}</td>
     <td>{{post.reactions}}</td>
     <td>
-      <button (click)="openPost(post)">Megnyitás</button>
+      <button mat-mini-fab color="primary" (click)="openPost(post)" title="Megtekintés" title="Megtekintés">
+        <mat-icon>visibility</mat-icon>
+      </button>
     </td>
   </tr>
   </tbody>

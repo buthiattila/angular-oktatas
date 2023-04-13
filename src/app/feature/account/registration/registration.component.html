@@ -1,18 +1,29 @@
-<h1 class="text-center">Regisztráció</h1>
-<form [formGroup]="regForm">
-  <div>
-    <label for="lastName">Vezetéknév</label>
-    <input type="text" class="form-control" id="lastName" formControlName="lastName">
-    <div *ngIf="regForm.controls['lastName'].invalid && (regForm.controls['lastName'].touched || regForm.controls['lastName'].dirty)">Kötelező mező</div>
-  </div>
-  <div>
-    <label for="firstName">Keresztnév</label>
-    <input type="text" class="form-control" id="firstName" formControlName="firstName">
-    <div *ngIf="checkValue('firstName')">Kötelező mező</div>
-  </div>
-  <div>
-    <label for="age">Életkor</label>
-    <input type="text" class="form-control" id="age" formControlName="age">
-  </div>
-  <button type="submit" (click)="formSave()">Küldés</button>
-</form>
+<div class="registration-wrapper" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="box">
+    <mat-card-header>
+      <mat-card-title>Regisztráció</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="regForm" class="example-form">
+      <mat-card-content>
+        <mat-form-field class="w-100">
+          <mat-label>Vezetéknév</mat-label>
+          <input matInput type="text" class="form-control" id="lastName" formControlName="lastName">
+          <div *ngIf="regForm.controls['lastName'].invalid && (regForm.controls['lastName'].touched || regForm.controls['lastName'].dirty)">Kötelező mező</div>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label>Keresztnév</mat-label>
+          <input matInput type="text" class="form-control" id="firstName" formControlName="firstName">
+          <div *ngIf="regForm.controls['firstName'].invalid && (regForm.controls['firstName'].touched || regForm.controls['firstName'].dirty)">Kötelező mező</div>
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label>Életkor</mat-label>
+          <input matInput type="number" class="form-control" id="age" formControlName="age">
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="submit" mat-raised-button color="primary" [class.btn-spinner]="loading" [disabled]="loading" class="example-full-width" (click)="formSave()">Regisztráció</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
+
