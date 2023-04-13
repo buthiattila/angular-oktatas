@@ -12,7 +12,7 @@
 6. video: eventek,service-k
 7. video: formok, promise-k, regisztráció
 8. video: router, login, post, request, http
-9. video: blog-postok, observable
+9. video: blog-postok, observable, actRoute
 10. video:
 11. video:
 12. video:
@@ -26,6 +26,8 @@ ha egy modul komponensét a modulon kívül is szeretnénk használni, akkor a "
 modult
 
 valtozo?:string -> ha ? jel van, akkor nem kötelező paraméter!
+
+actRoute: ActivatedRoute -> this.actRoute.snapshot.params['title']: route-ból kiolvassa a :title paraméterként átadott értéket 
 
 rxjs BehaviorSubject:
 

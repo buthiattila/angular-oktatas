@@ -23,31 +23,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.init();
-
-    // VAN API 1 DB lekérdezésre
-    /*this.postService.getSinglePost(this.id).subscribe((post: Post) => {
-      // this.post = post;
-    });*/
-
-    //OPCIONÁLIS PATH PARAMÉTEREK LEKÉRDEZÉSE
-    /*this.post = {
-      id: this.id,
-      title: this.actRoute.snapshot.params['title'],
-      body: this.actRoute.snapshot.params['body'],
-      tags: this.actRoute.snapshot.params['tags'].split(','),
-      reactions: this.actRoute.snapshot.params['reactions'],
-      userId: 0
-    }*/
-
-    //QUERY PARAMÉTEREK LEKÉRDEZEÉS
-    /*this.post = {
-      id: this.id,
-      title: this.actRoute.snapshot.queryParamMap.get('title')+'',
-      body: this.actRoute.snapshot.queryParamMap.get('body')+'',
-      tags: (this.actRoute.snapshot.queryParamMap.get('tags')+'').split(','),
-      reactions: parseInt(this.actRoute.snapshot.queryParamMap.get('reactions')+''),
-      userId: 0
-    }*/
   }
 
   ngOnDestroy(): void {
@@ -57,7 +32,6 @@ export class PostComponent implements OnInit, OnDestroy {
 
   private init(): void {
     this.loading = true;
-
     this.id = this.actRoute.snapshot.params['id'];
 
     this.postService.posts$.pipe(takeUntil(this.unsubscribe)).subscribe((posts: Post[] | null) => {
@@ -67,7 +41,7 @@ export class PostComponent implements OnInit, OnDestroy {
         this.postService.getAllPosts()
       } else if (post === undefined) {
         this.loading = false;
-        this.errorMsg = 'NINCS ILYEN POST'
+        this.errorMsg = 'A bejegyzés nem létezik'
       } else {
         this.loading = false;
         this.post = post; // post beállítás
