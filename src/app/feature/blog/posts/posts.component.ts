@@ -22,33 +22,22 @@ export class PostsComponent implements OnInit {
     this.init();
   }
 
-  private init() {
+  private init(): void {
     this.loading = true;
+
     this.postService.getAllPostsToComponent().subscribe({
       next: (response: PostResponse) => {
         this.posts = response.posts
         this.loading = false;
       },
       error: (err) => {
-        console.log(err);
         this.loading = false;
         this.errorMsg = err
       }
     });
-
-    // this.postService.getAllPosts();
-    //SUBS
-    /*this.postService.posts$.subscribe((posts:Post[] | null)=>{
-      if(posts !== null){
-        this.loading = false;
-        this.posts = posts;
-      }else{
-       this.loading = true;
-      }
-    });*/
   }
 
-  editPost(post: Post) {
+  openPost(post: Post): void {
     this.router.navigate(['post', post.id]);
   }
 

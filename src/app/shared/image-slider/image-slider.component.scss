@@ -1,5 +1,4 @@
 .slider {
-  width: 500px;
   height: 300px;
   position: relative;
   color: #FFFFFF;
@@ -11,7 +10,6 @@
   }
 
   .arrow-container {
-
     .arrow {
       position: absolute;
       font-size: 30px;
@@ -31,7 +29,7 @@
     }
   }
 
-  .dots {
+  .dot-container {
     display: flex;
     justify-content: center;
 

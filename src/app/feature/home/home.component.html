@@ -1,8 +1,7 @@
-<div id="container">
+<div id="container" class="w-100 text-center">
   <app-image-slider (slideSelected)="getSelectedSlide($event)" [triggerIndex]="slideService.getTriggerIndex()"></app-image-slider>
   <p>{{(selectedIndex !== null) ? slideService.getSlides()[selectedIndex].desc : ''}}</p>
-  <app-select-button></app-select-button>
+  <div style="margin-top:3em;">
+    <app-select-button></app-select-button>
+  </div>
 </div>
-
-
-

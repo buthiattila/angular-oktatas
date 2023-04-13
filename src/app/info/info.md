@@ -12,7 +12,7 @@
 6. video: eventek,service-k
 7. video: formok, promise-k, regisztráció
 8. video: router, login, post, request, http
-9. video: blog-postok
+9. video: blog-postok, observable
 10. video:
 11. video:
 12. video:
@@ -27,6 +27,6 @@ modult
 
 valtozo?:string -> ha ? jel van, akkor nem kötelező paraméter!
 
-BehaviorSubject:
+rxjs BehaviorSubject:
 
-Observable: 
+rxjs Observable: 

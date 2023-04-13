@@ -10,7 +10,7 @@
     <div class="arrow right-arrow" (click)="slideNext()">></div>
   </div>
 
-  <div class="dots">
+  <div class="dot-container">
     <div class="dot" *ngFor="let slide of slideService.getSlides();let sliderIndex=index" [ngClass]="{'active':slideService.getCurrentIndex() == sliderIndex}" (click)="slideTo(sliderIndex)">.</div>
   </div>
 </div>

@@ -1,9 +1,14 @@
+<div class="w-100 text-end">
+  <button (click)="closePost()">Bezárás</button>
+</div>
+<p *ngIf="loading" class="text-center">Kérjük várjon!</p>
+<p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
 <div *ngIf="post">
-  <p>{{post.id}}</p>
-  <p>{{post.title}}</p>
-  <p>{{post.body}}</p>
-  <p>
+  <div>ID: {{post.id}}</div>
+  <div>Cím: {{post.title}}</div>
+  <div>Szöveg: {{post.body}}</div>
+  <div>Tagek:
     <span *ngFor="let tag of post.tags">{{tag}}</span>
-  </p>
-  <p>{{post.reactions}}</p>
+  </div>
+  <div>Reakciók: {{post.reactions}}</div>
 </div>

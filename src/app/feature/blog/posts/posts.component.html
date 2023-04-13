@@ -1,5 +1,5 @@
-<p *ngIf="loading">Kérjük várjon!</p>
-<p *ngIf="errorMsg !== ''">{{errorMsg}}</p>
+<p *ngIf="loading" class="text-center">Kérjük várjon!</p>
+<p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
 
 <table *ngIf="!loading && errorMsg == '' ">
   <thead>
@@ -20,7 +20,7 @@
     <td>{{post.tags}}</td>
     <td>{{post.reactions}}</td>
     <td>
-      <button (click)="editPost(post)">Szerkesztés</button>
+      <button (click)="openPost(post)">Megnyitás</button>
     </td>
   </tr>
   </tbody>
