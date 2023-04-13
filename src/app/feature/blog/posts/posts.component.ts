@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {HttpErrorResponse} from "@angular/common/http";
 
 import {PostService} from 'src/app/core/services/blog/post.service';
 import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
-import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-posts',
@@ -15,6 +15,7 @@ export class PostsComponent implements OnInit {
   loading: boolean = false;
   posts: Post[] = [];
   errorMsg: string = '';
+  displayedColumns: string[] = ['id', 'title', 'body', 'tags', 'reactions', 'options'];
 
   constructor(private postService: PostService, private router: Router) {
   }

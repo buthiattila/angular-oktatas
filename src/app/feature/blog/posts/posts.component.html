@@ -3,29 +3,36 @@
 </p>
 <p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
 
-<table *ngIf="!loading && errorMsg == '' ">
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Cím</th>
-    <th>Szöveg</th>
-    <th>Tagek</th>
-    <th>Reakciók</th>
-    <th>....</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let post of posts">
-    <td>{{post.id}}</td>
-    <td>{{post.title}}</td>
-    <td>{{post.body}}</td>
-    <td>{{post.tags}}</td>
-    <td>{{post.reactions}}</td>
-    <td>
-      <button mat-mini-fab color="primary" (click)="openPost(post)" title="Megtekintés" title="Megtekintés">
-        <mat-icon>visibility</mat-icon>
-      </button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div *ngIf="!loading && errorMsg == '' ">
+  <table mat-table [dataSource]="posts">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef> Cím </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+    <ng-container matColumnDef="body">
+      <th mat-header-cell *matHeaderCellDef> Szöveg </th>
+      <td mat-cell *matCellDef="let element"> {{element.body}} </td>
+    </ng-container>
+    <ng-container matColumnDef="tags">
+      <th mat-header-cell *matHeaderCellDef> Tagek </th>
+      <td mat-cell *matCellDef="let element"> {{element.tags}} </td>
+    </ng-container>
+    <ng-container matColumnDef="reactions">
+      <th mat-header-cell *matHeaderCellDef> Reakciók </th>
+      <td mat-cell *matCellDef="let element"> {{element.reactions}} </td>
+    </ng-container>
+    <ng-container matColumnDef="options">
+      <th mat-header-cell *matHeaderCellDef> Opciók </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab color="primary" (click)="openPost(element)" title="Megtekintés" title="Megtekintés">
+          <mat-icon>visibility</mat-icon>
+        </button></td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
