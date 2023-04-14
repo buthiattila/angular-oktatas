@@ -4,7 +4,12 @@
 <p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
 
 <div *ngIf="!loading && errorMsg == '' ">
-  <table mat-table [dataSource]="posts">
+  <mat-form-field>
+    <mat-label>Keresés</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Keresés" #input>
+  </mat-form-field>
+
+  <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>#</th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
@@ -34,5 +39,9 @@
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="6" class="text-center">Nem található tartalom "{{input.value}}"</td>
+    </tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
 </div>
