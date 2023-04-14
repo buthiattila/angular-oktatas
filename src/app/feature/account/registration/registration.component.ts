@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
 
 import {RegistrationAuth, RegistrationResponse} from "src/app/core/types/account/registration.type";
 import {AuthService} from "../../../core/services/auth/auth.service";
 import {Router} from "@angular/router";
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-registration',
@@ -18,9 +18,9 @@ export class RegistrationComponent {
 
   constructor(private authSerivce: AuthService, private router: Router) {
     this.regForm = new FormGroup({
-      'firstName': new FormControl("Muhammad", [Validators.required, Validators.minLength(3)]),
-      'lastName': new FormControl('Ovi', [Validators.required, Validators.minLength(3)]),
-      'age': new FormControl(250, [Validators.required, Validators.pattern('^[0-9]+$')]),
+      'firstName': new FormControl(environment.testData.registration.firstName, [Validators.required, Validators.minLength(3)]),
+      'lastName': new FormControl(environment.testData.registration.lastName, [Validators.required, Validators.minLength(3)]),
+      'age': new FormControl(environment.testData.registration.age, [Validators.required, Validators.pattern('^[0-9]+$')]),
     });
   }
 

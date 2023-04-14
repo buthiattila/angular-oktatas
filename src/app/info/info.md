@@ -14,7 +14,7 @@
 8. video: router, login, post, request, http
 9. video: blog-postok, observable, actRoute
 10. video: pipe, httpInterceptor, CachingInterceptor, HeaderInterceptor, LogingInterceptor, ErrorHandlingInterceptor, MaterialDesign
-11. video:
+11. video: pipe, dateformázás, materialdeisgnTable
 12. video:
 13. video:
 14. video:

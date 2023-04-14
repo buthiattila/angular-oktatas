@@ -50,7 +50,7 @@ export class PostComponent implements OnInit, OnDestroy {
   }
 
   closePost(): void {
-    this.router.navigate(['posts']);
+    this.router.navigate(['blog/posts']);
   }
 
 }

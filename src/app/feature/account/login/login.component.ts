@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
+import {environment} from 'src/environments/environment';
 import {AuthService} from 'src/app/core/services/auth/auth.service';
 import {LoginAuth,LoginResponse} from 'src/app/core/types/account/login.type';
 
@@ -18,9 +19,9 @@ export class LoginComponent {
 
   constructor(private authSerivce: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
-      username: new FormControl("kminchelle", [Validators.required]),
-      password: new FormControl("0lelplR", [Validators.required]),
-      isCompany: new FormControl(null)
+      username: new FormControl(environment.testData.login.username, [Validators.required]),
+      password: new FormControl(environment.testData.login.password, [Validators.required]),
+      isCompany: new FormControl(environment.testData.login.isCompany)
     });
   }
 
@@ -33,7 +34,7 @@ export class LoginComponent {
       this.authSerivce.login(formData).subscribe((res: LoginResponse) => {
         if (res.id) {
           this.authSerivce.initUser(res);
-          this.router.navigate(['posts']);
+          this.router.navigate(['blog/posts']);
         } else {
           this.loading = false;
           alert("A felhasználónév vagy jelszó nem megfelelő!");

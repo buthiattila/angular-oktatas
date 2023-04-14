@@ -5,5 +5,17 @@ export const environment = {
     login: '/auth/login',
     posts: '/posts',
     post: '/post/'
+  },
+  testData: {
+    login: {
+      username: 'kminchelle',
+      password: '0lelplR',
+      isCompany: null,
+    },
+    registration: {
+      firstName: 'Muhammad',
+      lastName: 'Ovi',
+      age: 250,
+    }
   }
 }

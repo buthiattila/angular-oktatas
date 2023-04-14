@@ -7,10 +7,11 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from "./angular-material.module";
+import {AccountModule} from "./feature/account/account.module";
+import {TruncatePipe} from "./core/pipes/truncate.pipe";
+import {SplitPipe} from "./core/pipes/split.pipe";
 import {AppComponent} from './app.component';
 import {HomeComponent} from './feature/home/home.component';
-import {RegistrationComponent} from './feature/account/registration/registration.component';
-import {LoginComponent} from './feature/account/login/login.component';
 import {PostsComponent} from './feature/blog/posts/posts.component';
 import {PostComponent} from './feature/blog/post/post.component';
 import {InfoComponent} from './info/info.component';
@@ -19,21 +20,22 @@ import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.
 import {SelectButtonComponent} from './shared/select-button/select-button.component';
 import {NavbarComponent} from "./feature/navbar/navbar.component";
 import {FooterComponent} from "./feature/footer/footer.component";
+import {AccountRoutingModule} from "./feature/account/account-routing.module";
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    LoginComponent,
-    PostsComponent,
-    PostComponent,
     InfoComponent,
     ImageSliderComponent,
     HoverHighlightDirective,
     SelectButtonComponent,
-    RegistrationComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    PostsComponent,
+    PostComponent,
+    TruncatePipe,
+    SplitPipe
   ],
   imports: [
     BrowserModule,
@@ -43,7 +45,9 @@ import {FooterComponent} from "./feature/footer/footer.component";
     BrowserAnimationsModule,
     FormsModule,
     AngularMaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    AccountModule,
+    AccountRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
