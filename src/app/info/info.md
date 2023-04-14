@@ -15,12 +15,13 @@
 9. video: blog-postok, observable, actRoute
 10. video: pipe, httpInterceptor, CachingInterceptor, HeaderInterceptor, LogingInterceptor, ErrorHandlingInterceptor, MaterialDesign
 11. video: pipe, dateformázás, materialdeisgnTable
-12. video:
+12. video: ng-container
 13. video:
 14. video:
 15. video:
 
 !!kérdés: még nem lett lecserélve a deprecated CanActivate!!
+!!kérdés: ng-container template-t ki lehet valahogy szervezni külön html-fájlba (ha túl nagy lenne a template és több féle kellene belőle)
 
 ha egy modul komponensét a modulon kívül is szeretnénk használni, akkor a "providers" tömbbe is be kell rakni az adott
 modult

@@ -1,4 +1,4 @@
-import {Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, AfterViewInit, ViewChild, ChangeDetectorRef, QueryList} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatTableDataSource} from '@angular/material/table';
@@ -13,7 +13,7 @@ import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit,AfterViewInit {
 
   loading: boolean = false;
   posts: Post[] = [];
