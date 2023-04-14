@@ -1,10 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 
 import {environment} from 'src/environments/environment';
 import {AuthService} from 'src/app/core/services/auth/auth.service';
-import {LoginAuth,LoginResponse} from 'src/app/core/types/account/login.type';
+import {LoginAuth, LoginResponse} from 'src/app/core/types/account/login.type';
+import {SwalComponent} from "@sweetalert2/ngx-sweetalert2";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -16,6 +18,9 @@ export class LoginComponent {
   hidePassword = true;
   loading = false;
   loginForm: FormGroup;
+  @ViewChild('errorSwal')
+  public readonly errorSwal!: SwalComponent;
+  private unsubscribe = new Subject<void>();
 
   constructor(private authSerivce: AuthService, private router: Router) {
     this.loginForm = new FormGroup({
@@ -25,7 +30,21 @@ export class LoginComponent {
     });
   }
 
-  formSave():void {
+  ngOnDestroy(): void {
+    this.authSerivce.resetErrorCnt();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+  ngAfterViewInit() {
+    this.authSerivce.authErrorCnt$.pipe(takeUntil(this.unsubscribe)).subscribe((errorCnt: number) => {
+      if (errorCnt > 0) {
+        this.errorSwal.fire();
+      }
+    });
+  }
+
+  formSave(): void {
     this.loading = true;
 
     if (this.loginForm.valid) {

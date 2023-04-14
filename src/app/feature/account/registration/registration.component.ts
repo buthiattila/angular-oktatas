@@ -36,7 +36,7 @@ export class RegistrationComponent {
 
       this.authSerivce.registration(formData).subscribe((res: RegistrationResponse) => {
         if (res.id) {
-          this.router.navigate(['login']);
+          this.router.navigate(['account/login']);
         } else {
           this.loading = false;
           alert("A regisztráció nem sikerült!");

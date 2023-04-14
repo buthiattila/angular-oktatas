@@ -6,6 +6,7 @@ import {AngularMaterialModule} from "src/app/angular-material.module";
 import {AccountRoutingModule} from "./account-routing.module";
 import {LoginComponent} from "src/app/feature/account/login/login.component";
 import {RegistrationComponent} from "src/app/feature/account/registration/registration.component";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {RegistrationComponent} from "src/app/feature/account/registration/regist
     ReactiveFormsModule,
     AngularMaterialModule,
     FlexLayoutModule,
-    AccountRoutingModule
+    AccountRoutingModule,
+    SweetAlert2Module
   ]
 })
 export class AccountModule {

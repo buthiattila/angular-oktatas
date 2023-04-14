@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 import {LoginAuth, LoginApi, LoginResponse} from 'src/app/core/types/account/login.type';
 import {HttpService} from '../http/http.service';
@@ -10,7 +10,20 @@ import {RegistrationApi, RegistrationAuth, RegistrationResponse} from "../../typ
 })
 export class AuthService {
 
+  private authErrorCnt = new BehaviorSubject<number>(0);
+  authErrorCnt$ = this.authErrorCnt.asObservable();
+
   constructor(private httpSerivce: HttpService) {
+  }
+
+  increaseErrorCnt(): void {
+    let currentValue = this.authErrorCnt.value;
+
+    this.authErrorCnt.next(++currentValue);
+  }
+
+  resetErrorCnt(): void {
+    this.authErrorCnt.next(0);
   }
 
   registration(regData: RegistrationAuth): Observable<RegistrationResponse> {
