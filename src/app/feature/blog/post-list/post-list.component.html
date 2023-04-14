@@ -1,0 +1,9 @@
+<div *ngIf="posts$|async as postResponse; else loadingError">
+  <ul>
+    <li *ngFor="let post of postResponse.posts">{{post.title}}</li>
+  </ul>
+</div>
+
+<ng-template #loadingError>
+  <div>Hiba a betöltésben</div>
+</ng-template>

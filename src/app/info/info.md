@@ -15,7 +15,7 @@
 9. video: blog-postok, observable, actRoute
 10. video: pipe, httpInterceptor, CachingInterceptor, HeaderInterceptor, LogingInterceptor, ErrorHandlingInterceptor, MaterialDesign
 11. video: pipe, dateformázás, materialdeisgnTable
-12. video: ng-container
+12. video: ng-container,ng-template, async pipe, sweetalert
 13. video:
 14. video:
 15. video:
@@ -27,6 +27,7 @@ ha egy modul komponensét a modulon kívül is szeretnénk használni, akkor a "
 modult
 
 valtozo?:string -> ha ? jel van, akkor nem kötelező paraméter!
+valtozo$:string -> ha $ jel van, akkor Observable
 
 actRoute: ActivatedRoute -> this.actRoute.snapshot.params['title']: route-ból kiolvassa a :title paraméterként átadott értéket 
 

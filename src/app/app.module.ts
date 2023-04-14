@@ -4,6 +4,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from "./angular-material.module";
@@ -21,7 +22,7 @@ import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.
 import {SelectButtonComponent} from './shared/select-button/select-button.component';
 import {NavbarComponent} from "./feature/navbar/navbar.component";
 import {FooterComponent} from "./feature/footer/footer.component";
-
+import {PostListComponent} from "./feature/blog/post-list/post-list.component";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {FooterComponent} from "./feature/footer/footer.component";
     FooterComponent,
     PostsComponent,
     PostComponent,
+    PostListComponent,
     TruncatePipe,
     SplitPipe
   ],
@@ -49,6 +51,7 @@ import {FooterComponent} from "./feature/footer/footer.component";
     FlexLayoutModule,
     AccountModule,
     AccountRoutingModule,
+    SweetAlert2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

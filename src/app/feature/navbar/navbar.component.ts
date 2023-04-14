@@ -1,8 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-
-import {AuthService} from 'src/app/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,13 +10,8 @@ export class NavbarComponent {
 
   title: string = '';
 
-  constructor(private router: Router, private titleService: Title, private authService: AuthService) {
+  constructor(private titleService: Title) {
     this.title = this.titleService.getTitle();
-  }
-
-  logOut(): void {
-    this.authService.logout();
-    this.router.navigate(['login']);
   }
 
 }
