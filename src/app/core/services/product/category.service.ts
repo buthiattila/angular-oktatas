@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {HttpService} from 'src/app/core/services/http/http.service';
-import {Category, CategoryResponse} from 'src/app/core/types/blog/category.type';
+import {Category, CategoryResponse} from 'src/app/core/types/product/category.type';
 
 @Injectable({
   providedIn: 'root'

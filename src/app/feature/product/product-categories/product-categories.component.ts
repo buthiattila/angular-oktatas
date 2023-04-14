@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 
-import {CategoryResponse} from "../../../core/types/blog/category.type";
-import {CategoryService} from "../../../core/services/blog/category.service";
+import {CategoryResponse} from "../../../core/types/product/category.type";
+import {CategoryService} from "../../../core/services/product/category.service";
 
 @Component({
   selector: 'app-product-categories',
