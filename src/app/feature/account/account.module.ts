@@ -15,7 +15,6 @@ import {RegistrationComponent} from "src/app/feature/account/registration/regist
   imports: [
     ReactiveFormsModule,
     AngularMaterialModule,
-    FormsModule,
     FlexLayoutModule,
     AccountRoutingModule
   ]

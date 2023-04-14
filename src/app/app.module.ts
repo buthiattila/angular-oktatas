@@ -8,6 +8,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from "./angular-material.module";
 import {AccountModule} from "./feature/account/account.module";
+import {AccountRoutingModule} from "./feature/account/account-routing.module";
 import {TruncatePipe} from "./core/pipes/truncate.pipe";
 import {SplitPipe} from "./core/pipes/split.pipe";
 import {AppComponent} from './app.component';
@@ -20,7 +21,7 @@ import {HoverHighlightDirective} from './shared/hover-highlight/hover-highlight.
 import {SelectButtonComponent} from './shared/select-button/select-button.component';
 import {NavbarComponent} from "./feature/navbar/navbar.component";
 import {FooterComponent} from "./feature/footer/footer.component";
-import {AccountRoutingModule} from "./feature/account/account-routing.module";
+
 
 @NgModule({
   declarations: [
