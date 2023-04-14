@@ -24,6 +24,7 @@ import {NavbarComponent} from "./feature/navbar/navbar.component";
 import {FooterComponent} from "./feature/footer/footer.component";
 import {PostListComponent} from "./feature/blog/post-list/post-list.component";
 import {ProductCategoriesComponent} from "./feature/product/product-categories/product-categories.component";
+import {ProductCarouselComponent} from "./feature/product/product-carousel/product-carousel.component";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {ProductCategoriesComponent} from "./feature/product/product-categories/p
     PostComponent,
     PostListComponent,
     ProductCategoriesComponent,
+    ProductCarouselComponent,
     TruncatePipe,
     SplitPipe
   ],

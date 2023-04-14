@@ -1,0 +1,7 @@
+<p>product-carousel works!</p>
+
+<div *ngIf="categories$|async as categoryResponse">
+  <mat-list role="list">
+    <mat-list-item color="primary" role="listitem" *ngFor="let category of categoryResponse">{{category}}</mat-list-item>
+  </mat-list>
+</div>
