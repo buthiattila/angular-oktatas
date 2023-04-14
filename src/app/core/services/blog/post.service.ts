@@ -12,17 +12,17 @@ export class PostService {
   private posts = new BehaviorSubject<Post[] | null>(null);
   posts$ = this.posts.asObservable();
 
-  constructor(private httService: HttpService) {
+  constructor(private httpService: HttpService) {
   }
 
   getAllPosts(): void {
-    this.httService.getAllPosts().subscribe((response: PostResponse) => {
+    this.httpService.getAllPosts().subscribe((response: PostResponse) => {
       this.posts.next(response.posts);
     });
   }
 
   getAllPostsToComponent(): Observable<PostResponse> {
-    return this.httService.getAllPosts();
+    return this.httpService.getAllPosts();
   }
 
   getSinglePostById(id: number): Post | null | undefined {
@@ -34,7 +34,7 @@ export class PostService {
   }
 
   getSinglePost(id: number): Observable<Post> {
-    return this.httService.getSinglePost(id);
+    return this.httpService.getSinglePost(id);
   }
 
 }

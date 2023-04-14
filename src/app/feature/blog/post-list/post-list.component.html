@@ -1,7 +1,7 @@
 <div *ngIf="posts$|async as postResponse; else loadingError">
-  <ul>
-    <li *ngFor="let post of postResponse.posts">{{post.title}}</li>
-  </ul>
+  <mat-list role="list">
+    <mat-list-item color="primary" role="listitem" *ngFor="let post of postResponse.posts">{{post.title}}</mat-list-item>
+  </mat-list>
 </div>
 
 <ng-template #loadingError>

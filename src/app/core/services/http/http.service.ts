@@ -6,6 +6,7 @@ import {environment} from 'src/environments/environment';
 import {RegistrationApi, RegistrationResponse} from "src/app/core/types/account/registration.type";
 import {LoginApi, LoginResponse} from 'src/app/core/types/account/login.type';
 import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
+import {Category, CategoryResponse} from "../../types/blog/category.type";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class HttpService {
 
   getSinglePost(id: number): Observable<Post> {
     return this.getRequest(environment.api.post + id);
+  }
+
+  getAllCategories(): Observable<CategoryResponse> {
+    return this.getRequest(environment.api.categories);
+  }
+
+  getCategoryProducts(category: string): Observable<Category> {
+    return this.getRequest(environment.api.categoryProducts + category);
   }
 
   private getRequest(path: string): Observable<any> {

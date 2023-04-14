@@ -32,5 +32,4 @@ valtozo$:string -> ha $ jel van, akkor Observable
 actRoute: ActivatedRoute -> this.actRoute.snapshot.params['title']: route-ból kiolvassa a :title paraméterként átadott értéket 
 
 rxjs BehaviorSubject:
-
 rxjs Observable: 

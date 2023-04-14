@@ -23,6 +23,7 @@ import {SelectButtonComponent} from './shared/select-button/select-button.compon
 import {NavbarComponent} from "./feature/navbar/navbar.component";
 import {FooterComponent} from "./feature/footer/footer.component";
 import {PostListComponent} from "./feature/blog/post-list/post-list.component";
+import {ProductCategoriesComponent} from "./feature/product/product-categories/product-categories.component";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {PostListComponent} from "./feature/blog/post-list/post-list.component";
     PostsComponent,
     PostComponent,
     PostListComponent,
+    ProductCategoriesComponent,
     TruncatePipe,
     SplitPipe
   ],

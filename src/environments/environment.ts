@@ -4,7 +4,9 @@ export const environment = {
     registration: '/users/add',
     login: '/auth/login',
     posts: '/posts',
-    post: '/post/'
+    post: '/post/',
+    categories: '/products/categories',
+    categoryProducts: '/products/category/'
   },
   testData: {
     login: {
