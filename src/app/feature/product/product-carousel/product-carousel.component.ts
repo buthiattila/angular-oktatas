@@ -12,6 +12,7 @@ import {CategoryResponse} from "../../../core/types/product/category.type";
 export class ProductCarouselComponent implements OnInit {
 
   categories$: Observable<CategoryResponse> = new Subject();
+  productsByCategories: [] = [];
 
   constructor(public readonly categoryService: CategoryService) {
   }
