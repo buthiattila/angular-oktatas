@@ -25,6 +25,8 @@ import {FooterComponent} from "./feature/footer/footer.component";
 import {PostListComponent} from "./feature/blog/post-list/post-list.component";
 import {ProductCategoriesComponent} from "./feature/product/product-categories/product-categories.component";
 import {ProductCarouselComponent} from "./feature/product/product-carousel/product-carousel.component";
+import {StepNextDirective} from "./shared/step/step-next.directive";
+import {StepPrevDirective} from "./shared/step/step-prev.directive";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,6 @@ import {ProductCarouselComponent} from "./feature/product/product-carousel/produ
     HomeComponent,
     InfoComponent,
     ImageSliderComponent,
-    HoverHighlightDirective,
     SelectButtonComponent,
     NavbarComponent,
     FooterComponent,
@@ -42,7 +43,10 @@ import {ProductCarouselComponent} from "./feature/product/product-carousel/produ
     ProductCategoriesComponent,
     ProductCarouselComponent,
     TruncatePipe,
-    SplitPipe
+    SplitPipe,
+    HoverHighlightDirective,
+    StepNextDirective,
+    StepPrevDirective
   ],
   imports: [
     BrowserModule,

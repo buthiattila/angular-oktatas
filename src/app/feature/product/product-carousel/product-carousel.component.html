@@ -1,7 +1,42 @@
-<p>product-carousel works!</p>
-
-<div *ngIf="categories$|async as categoryResponse">
-  <mat-list role="list">
-    <mat-list-item color="primary" role="listitem" *ngFor="let category of categoryResponse">{{category}}</mat-list-item>
-  </mat-list>
-</div>
+<section class="product">
+  <div class="container-fluid">
+    <div class="slider-wrap">
+      <div class="slider-main">
+        <div class="item">
+          <div class="item-content">
+            1
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            2
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            3
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            4
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            5
+          </div>
+        </div>
+        <div class="item">
+          <div class="item-content">
+            6
+          </div>
+        </div>
+      </div>
+      <div class="arrow-container">
+        <div class="arrow left-arrow" appStepPrev mainContainer=".slider-wrap" itemContainer=".slider-main"><</div>
+        <div class="arrow right-arrow" appStepNext mainContainer=".slider-wrap" itemContainer=".slider-main">></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,49 @@
+.product {
+  padding: 0 50px;
+
+  .slider-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 150px;
+
+    .slider-main {
+      position: absolute;
+      width: 200%;
+
+      .item {
+        display: inline-block;
+        width: 300px;
+        height: 150px;
+        background-color: red;
+        position: relative;
+        margin-right: 20px;
+
+        .item-content {
+
+        }
+      }
+    }
+  }
+
+  .arrow-container {
+    .arrow {
+      position: absolute;
+      font-size: 30px;
+      font-weight: 900;
+      cursor: pointer;
+      z-index: 1;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+
+      &.left-arrow {
+        left: 50px;
+      }
+
+      &.right-arrow {
+        right: 50px;
+      }
+    }
+  }
+
+}

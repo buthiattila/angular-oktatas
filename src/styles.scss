@@ -26,6 +26,14 @@ body {
   margin: auto;
 }
 
+.container-fluid {
+  width: 100%;
+  padding-right: 12px;
+  padding-left: 12px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 @keyframes spinner {
   to {
     transform: rotate(360deg);
