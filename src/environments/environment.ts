@@ -5,6 +5,7 @@ export const environment = {
     login: '/auth/login',
     posts: '/posts',
     post: '/post/',
+    products: '/products',
     categories: '/products/categories',
     categoryProducts: '/products/category/'
   },
