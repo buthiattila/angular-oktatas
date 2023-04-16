@@ -6,7 +6,13 @@ import {environment} from 'src/environments/environment';
 import {RegistrationApi, RegistrationResponse} from "src/app/core/types/account/registration.type";
 import {LoginApi, LoginResponse} from 'src/app/core/types/account/login.type';
 import {Post, PostResponse} from 'src/app/core/types/blog/post.type';
-import {Category, CategoryProductResponse, CategoryResponse, ProductsResponse} from "../../types/product/category.type";
+import {
+  Category,
+  CategoryProductResponse,
+  CategoryResponse,
+  CategoryWithProducts,
+  ProductsResponse
+} from "../../types/product/category.type";
 
 @Injectable({
   providedIn: 'root'

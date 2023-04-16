@@ -1,43 +1,26 @@
-<div *ngIf="categories$|async as categoryResponse">
-  <section class="product" *ngFor="let category of categoryResponse">
-    <h1 class="text-center">{{category}}</h1>
+<p *ngIf="loading">
+  <mat-spinner style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+</p>
+<p *ngIf="errorMsg !== ''" class="text-center">{{errorMsg}}</p>
+
+<div *ngIf="!loading && errorMsg == '' ">
+  <section class="product" *ngFor="let category of categoryWithProducts | keyvalue">
+    <h1 class="text-center">{{category.key}}</h1>
     <div class="container-fluid">
       <div class="slider-wrap">
         <div class="slider-main">
-          <div class="item">
+          <div class="item" *ngFor="let product of category.value">
             <div class="item-content">
-              <p class="product-img">kép (hover effectnél termék neve a képre írva)</p>
-              <p class="actual-price">3 000Ft</p>
-              <p class="original-price">15 000Ft</p>
-              <p class="product-name">Termék név</p>
+              <div class="product-img">
+                <img src="{{product.thumbnail}}" alt="{{product.description}}" (mouseover)="showImageTitle($event, 'tooltip_'+product.id)" (mouseout)="hideImageTitle('tooltip_'+product.id)">
+                <div *ngIf="showTooltipId == 'tooltip_'+product.id" class="tooltip" id="tooltip_{{product.id}}">{{product.title}}</div>
+              </div>
+              <p class="actual-price">{{(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}}$</p>
+              <p class="original-price">{{product.price}}$</p>
+              <p class="product-name">{{product.title}}</p>
               <div class="w-100 text-center">
                 <button type="button" mat-raised-button color="primary">Megveszem</button>
               </div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-content">
-              2
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-content">
-              3
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-content">
-              4
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-content">
-              5
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-content">
-              6
             </div>
           </div>
         </div>

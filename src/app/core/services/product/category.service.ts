@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, from} from 'rxjs';
+import {groupBy, mergeMap, toArray} from 'rxjs/operators';
 
 import {HttpService} from 'src/app/core/services/http/http.service';
 import {
-  Category,
+  Category, CategoryProductResponse,
   CategoryResponse,
   CategoryWithProducts,
   ProductsResponse
@@ -29,19 +30,12 @@ export class CategoryService {
     });
   }
 
-  getAllCategoriesWithProducts() {
-    this.httpService.getAllProducts().subscribe((response: ProductsResponse) => {
-      let productsByCategories: CategoryWithProducts = {};
+  getCategoryProducts(category: string): Observable<CategoryProductResponse> {
+    return this.httpService.getCategoryProducts(category);
+  }
 
-      for (let i = 0; i < response.products.length; i++) {
-        let product = response.products[i];
-
-        productsByCategories[product.category] = [];
-        productsByCategories[product.category].push(product);
-      }
-
-      this.productsByCategories.next(productsByCategories);
-    });
+  getAllProductsToComponent(): Observable<ProductsResponse> {
+    return this.httpService.getAllProducts();
   }
 
   getAllCategoriesToComponent(): Observable<CategoryResponse> {

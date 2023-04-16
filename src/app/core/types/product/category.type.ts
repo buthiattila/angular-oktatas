@@ -1,22 +1,3 @@
-export type Category = []
-
-export type CategoryResponse = []
-
-export type CategoryWithProducts = {
-  [key: string]: Product[]
-}
-
-export type CategoryProductResponse = {
-  products: {
-    id: number,
-    title: string,
-    category: string,
-  },
-  total: number,
-  skip: number,
-  limit: number
-}
-
 export type ProductsResponse = {
   products: Product[],
   total: number,
@@ -28,7 +9,7 @@ export type Product = {
   "id": number,
   "title": string,
   "description": string,
-  "price": number,
+  "price": any,
   "discountPercentage": any,
   "rating": any,
   "stock": any,
@@ -37,3 +18,13 @@ export type Product = {
   "thumbnail": string,
   "images": string []
 }
+
+export type Category = []
+
+export type CategoryResponse = []
+
+export type CategoryWithProducts = {
+  [key: string]: Product[]
+}
+
+export type CategoryProductResponse = ProductsResponse;

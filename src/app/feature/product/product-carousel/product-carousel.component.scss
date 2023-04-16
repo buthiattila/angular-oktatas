@@ -13,7 +13,7 @@
 
       .item {
         display: inline-block;
-        width: 300px;
+        width: 280px;
         height: 300px;
         background-color: #d7d5d5;
         color: #303030;
@@ -29,7 +29,24 @@
           padding: .5rem;
 
           .product-img {
+            height: 100px;
+            text-align: center;
 
+            img {
+              max-height: 100%;
+              margin: auto;
+            }
+
+            .tooltip {
+              position: absolute;
+              width: 100%;
+              top: 0;
+              left: 0;
+              background-color: #000;
+              color: #fff;
+              padding: 5px;
+              font-size: 14px;
+            }
           }
 
           .actual-price {
