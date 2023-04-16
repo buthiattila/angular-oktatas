@@ -17,7 +17,7 @@
               </div>
               <p class="actual-price">{{(product.price * (1 - product.discountPercentage / 100)).toFixed(2)}}$</p>
               <p class="original-price">{{product.price}}$</p>
-              <p class="product-name">{{product.title}}</p>
+              <p class="product-name">{{product.title | truncate:30}}</p>
               <div class="w-100 text-center">
                 <button type="button" mat-raised-button color="primary">Megveszem</button>
               </div>

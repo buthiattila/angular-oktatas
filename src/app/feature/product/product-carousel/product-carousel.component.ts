@@ -1,10 +1,10 @@
-import {Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable, Subject, takeUntil} from "rxjs";
 
 import {CategoryService} from "../../../core/services/product/category.service";
 import {
-  CategoryProductResponse,
   CategoryResponse,
+  CategoryProductResponse,
   CategoryWithProducts
 } from "../../../core/types/product/category.type";
 import {HttpErrorResponse} from "@angular/common/http";
@@ -23,7 +23,7 @@ export class ProductCarouselComponent implements OnInit {
   categoryWithProducts: CategoryWithProducts = {};
   private unsubscribe = new Subject<void>();
 
-  constructor(public readonly categoryService: CategoryService, private element: ElementRef) {
+  constructor(public readonly categoryService: CategoryService) {
   }
 
   ngOnInit(): void {

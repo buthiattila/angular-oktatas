@@ -5,7 +5,7 @@
   .slider-wrap {
     position: relative;
     overflow: hidden;
-    height: 350px;
+    height: 280px;
 
     .slider-main {
       position: absolute;
@@ -14,15 +14,15 @@
       .item {
         display: inline-block;
         width: 280px;
-        height: 300px;
+        //height: 350px;
         background-color: #d7d5d5;
         color: #303030;
         position: relative;
         margin-right: 20px;
         border-radius: .5rem;
-        box-shadow: 8px 11px 17px 0px rgba(0, 0, 0, 0.75);
-        -webkit-box-shadow: 8px 11px 17px 0px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 8px 11px 17px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 8px 11px 17px 0 rgba(0, 0, 0, 0.75);
+        -webkit-box-shadow: 8px 11px 17px 0 rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 8px 11px 17px 0 rgba(0, 0, 0, 0.75);
 
 
         .item-content {
