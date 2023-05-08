@@ -3,12 +3,12 @@
 3. video: scss
 4. video scss, változók
 5. video: slider, ngif, ngfor,
-1. @Input (adat átadása gyermek komponensnek HTML oldalon),
-2. @Output (adat átadása szülő komponensnek HTML oldalon),
-3. EventEmitter (emit()) esemény lekezelése,
-4. LifeCycleEvent: ngOnInit, ngOnChanges, ngGoCheck, ngAfterContentInit, ngAfterContentCheck, ngAfterViewChecked,
-   ngOnDestroy
-5. direktívák, ElementRef, HostListener
+   1. @Input (adat átadása gyermek komponensnek HTML oldalon),
+   2. @Output (adat átadása szülő komponensnek HTML oldalon),
+   3. EventEmitter (emit()) esemény lekezelése,
+   4. LifeCycleEvent: ngOnInit, ngOnChanges, ngGoCheck, ngAfterContentInit, ngAfterContentCheck, ngAfterViewChecked,
+      ngOnDestroy
+   5. direktívák, ElementRef, HostListener
 6. video: eventek,service-k
 7. video: formok, promise-k, regisztráció
 8. video: router, login, post, request, http
@@ -18,10 +18,8 @@
 12. video: ng-container,ng-template, async pipe, sweetalert
 13. video: inject-ek
 14. video: program élesítés, teszt futtatás
-15. video:
-
-!!kérdés: még nem lett lecserélve a deprecated CanActivate!!
-!!kérdés: ng-container template-t ki lehet valahogy szervezni külön html-fájlba (ha túl nagy lenne a template és több féle kellene belőle)
+15. video: material színpaletta módosítása és használata, ngrx
+16. video: tic-tac-toe
 
 ha egy modul komponensét a modulon kívül is szeretnénk használni, akkor a "providers" tömbbe is be kell rakni az adott
 modult
