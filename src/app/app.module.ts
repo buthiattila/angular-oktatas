@@ -27,6 +27,9 @@ import {ProductCategoriesComponent} from "./feature/product/product-categories/p
 import {ProductCarouselComponent} from "./feature/product/product-carousel/product-carousel.component";
 import {StepNextDirective} from "./shared/step/step-next.directive";
 import {StepPrevDirective} from "./shared/step/step-prev.directive";
+import {UpperPipe} from "./core/pipes/upper.pipe";
+import {TicTacToeComponent} from "./feature/tic-tac-toe/tic-tac-toe.component";
+import {FieldComponent} from "./feature/field/field.component";
 
 @NgModule({
   declarations: [
@@ -42,8 +45,11 @@ import {StepPrevDirective} from "./shared/step/step-prev.directive";
     PostListComponent,
     ProductCategoriesComponent,
     ProductCarouselComponent,
+    TicTacToeComponent,
+    FieldComponent,
     TruncatePipe,
     SplitPipe,
+    UpperPipe,
     HoverHighlightDirective,
     StepNextDirective,
     StepPrevDirective

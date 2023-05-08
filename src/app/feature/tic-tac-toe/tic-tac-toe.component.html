@@ -1,0 +1,9 @@
+<div id="playground">
+  <ng-container *ngFor="let number of numbers; let i = index">
+    <app-field
+      [lineBreakNeeded]="i%3===0"
+      [index]="i"
+      (coords)="getCoords($event)"
+    ></app-field>
+  </ng-container>
+</div>

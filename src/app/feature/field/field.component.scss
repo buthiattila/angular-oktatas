@@ -1,0 +1,16 @@
+.field {
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+  border-radius: 20px;
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+
+  .marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

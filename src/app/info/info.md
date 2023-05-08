@@ -16,8 +16,8 @@
 10. video: pipe, httpInterceptor, CachingInterceptor, HeaderInterceptor, LogingInterceptor, ErrorHandlingInterceptor, MaterialDesign
 11. video: pipe, dateformázás, materialdeisgnTable
 12. video: ng-container,ng-template, async pipe, sweetalert
-13. video:
-14. video:
+13. video: inject-ek
+14. video: program élesítés, teszt futtatás
 15. video:
 
 !!kérdés: még nem lett lecserélve a deprecated CanActivate!!

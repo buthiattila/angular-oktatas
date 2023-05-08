@@ -8,6 +8,7 @@ import {PostsComponent} from './feature/blog/posts/posts.component';
 import {PostComponent} from './feature/blog/post/post.component';
 import {PostListComponent} from "./feature/blog/post-list/post-list.component";
 import {ProductCategoriesComponent} from "./feature/product/product-categories/product-categories.component";
+import {TicTacToeComponent} from "./feature/tic-tac-toe/tic-tac-toe.component";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'blog/posts', component: PostsComponent, canActivate: [AuthGuardService]},
   {path: 'blog/post-list', component: PostListComponent, canActivate: [AuthGuardService]},
   {path: 'blog/post/:id', component: PostComponent, canActivate: [AuthGuardService]},
+  {path: 'games/tictactoe', component: TicTacToeComponent, canActivate: [AuthGuardService]},
   {path: 'info', component: InfoComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home'}
