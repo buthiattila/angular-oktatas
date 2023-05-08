@@ -1,4 +1,6 @@
 import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FlexLayoutModule} from "@angular/flex-layout";
 
@@ -14,6 +16,7 @@ import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
     RegistrationComponent,
   ],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     AngularMaterialModule,
     FlexLayoutModule,

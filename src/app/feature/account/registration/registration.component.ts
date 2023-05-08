@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
+import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 import {RegistrationAuth, RegistrationResponse} from "src/app/core/types/account/registration.type";
 import {AuthService} from "../../../core/services/auth/auth.service";
-import {Router} from "@angular/router";
 import {environment} from "../../../../environments/environment";
 
 @Component({

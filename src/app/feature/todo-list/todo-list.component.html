@@ -1,0 +1,23 @@
+<h1>TODO LIST</h1>
+
+<form (submit)="onSubmit($event)">
+  <input [(ngModel)]="newTodo" name="newTod" placeholder="Vegyél fel egy todot">
+  <button type="submit">Hozzáadás</button>
+</form>
+
+
+<div *ngIf="inCompletedTodos$ |async as todos">
+  <h1>Tennivaló lista</h1>
+  <ul>
+    <li *ngFor="let todo of todos">{{todo.title}}  <span (click)="deleteTodo(todo.id)">X</span></li>
+  </ul>
+</div>
+
+
+<div *ngIf="completedTodos$ |async as todos">
+  <h1>Kész lista</h1>
+  <ul>
+    <li *ngFor="let todo of todos">{{todo.title}}  <span (click)="deleteTodo(todo.id)">X</span></li>
+  </ul>
+
+</div>

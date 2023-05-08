@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from "./angular-material.module";
 import {AccountModule} from "./feature/account/account.module";
 import {AccountRoutingModule} from "./feature/account/account-routing.module";
+import {TodoListModule} from "./feature/todo-list/todo-list.module";
 import {TruncatePipe} from "./core/pipes/truncate.pipe";
 import {SplitPipe} from "./core/pipes/split.pipe";
 import {AppComponent} from './app.component';
@@ -65,6 +66,7 @@ import {FieldComponent} from "./feature/field/field.component";
     FlexLayoutModule,
     AccountModule,
     AccountRoutingModule,
+    TodoListModule,
     SweetAlert2Module.forRoot()
   ],
   providers: [],
