@@ -13,6 +13,9 @@ export class AuthService {
   private authErrorCnt = new BehaviorSubject<number>(0);
   authErrorCnt$ = this.authErrorCnt.asObservable();
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  loggedIn$ = this.loggedIn.asObservable();
+
   constructor(private httpSerivce: HttpService) {
   }
 
@@ -39,6 +42,7 @@ export class AuthService {
   }
 
   login(loginData: LoginAuth): Observable<LoginResponse> {
+    this.loggedIn.next(true);
     return this.httpSerivce.postLogin(this.mapLoginDataToLoginApiData(loginData))
   }
 
@@ -58,7 +62,16 @@ export class AuthService {
   }
 
   logout(): void {
+    this.loggedIn.next(false);
     localStorage.removeItem("token");
+  }
+
+  checkLoggedIn(){
+    if(this.isLoggedIn()){
+      this.loggedIn.next(true);
+    }else{
+      this.loggedIn.next(false);
+    }
   }
 
 }
