@@ -5,19 +5,20 @@
   <button type="submit">Hozzáadás</button>
 </form>
 
-
 <div *ngIf="inCompletedTodos$ |async as todos">
   <h1>Tennivaló lista</h1>
   <ul>
-    <li *ngFor="let todo of todos">{{todo.title}}  <span (click)="deleteTodo(todo.id)">X</span></li>
+    <li *ngFor="let todo of todos" class="list-item">
+      <span (click)="deleteTodo(todo.id)" class="btn-remove">X</span>{{todo.title}}
+    </li>
   </ul>
 </div>
-
 
 <div *ngIf="completedTodos$ |async as todos">
   <h1>Kész lista</h1>
   <ul>
-    <li *ngFor="let todo of todos">{{todo.title}}  <span (click)="deleteTodo(todo.id)">X</span></li>
+    <li *ngFor="let todo of todos" class="list-item">
+      <span (click)="deleteTodo(todo.id)" class="btn-remove">X</span>{{todo.title}}
+    </li>
   </ul>
-
 </div>

@@ -4,7 +4,7 @@
     <a class="nav-item" [routerLink]="['']">HOME</a>
     <a class="nav-item" [routerLink]="['account/registration']" *ngIf="!loggedIn">Regisztráció</a>
     <a class="nav-item" [routerLink]="['account/login']" *ngIf="!loggedIn">Bejelentkezés</a>
-    <a class="nav-item" [routerLink]="['blog/post-list']" *ngIf="loggedIn">Blog lista</a>
+    <a class="nav-item" [routerLink]="['blog/posts']" *ngIf="loggedIn">Blog tábla</a>
     <a class="nav-item" [routerLink]="['games/tictactoe']" *ngIf="loggedIn">Játék</a>
     <a class="nav-item" [routerLink]="['office/todo-list']" *ngIf="loggedIn">Feladatlista</a>
     <a class="nav-item" [routerLink]="['product/categories']" *ngIf="loggedIn">Kategóriák</a>

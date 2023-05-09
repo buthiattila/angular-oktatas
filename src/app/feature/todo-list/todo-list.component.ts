@@ -24,7 +24,6 @@ export class TodoListComponent {
     this.todos$ = this.store.select((state) => state.todos);
     this.completedTodos$ = this.store.select(selectCompleteTodos);
     this.inCompletedTodos$ = this.store.select(selectInCompleteTodos);
-
   }
 
   onSubmit(event: Event): void {
