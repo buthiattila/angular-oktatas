@@ -9,6 +9,7 @@ import {Coords} from 'src/app/core/types/games/coords.type';
 })
 export class TicTacToeComponent implements OnInit {
   numbers: number[] = [];
+  errorMessage: string = '';
 
   constructor(private gameService: GameService) {
   }
@@ -16,6 +17,9 @@ export class TicTacToeComponent implements OnInit {
   ngOnInit() {
     this.numbers = Array(this.gameService.fieldCount).fill(1);
     this.gameService.generatePlayground();
+    this.gameService.errorMessage$.subscribe((res) => {
+      this.errorMessage = res;
+    })
   }
 
   getCoords(coords: Coords) {
