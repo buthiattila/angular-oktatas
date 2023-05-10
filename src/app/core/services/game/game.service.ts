@@ -7,17 +7,21 @@ import {BehaviorSubject} from "rxjs";
 export class GameService {
 
   fieldCount: number = 25;
-  rowCount: number = 5;
-  colCount: number = 5;
+  rowCount: number = Math.sqrt(this.fieldCount);
+  colCount: number = Math.sqrt(this.fieldCount);
   victoryCount: number = 3;
-  game: number[][] = [];
   activePlayerIndex: number = 1;
+  game: number[][] = [];
 
   private errorMessage = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessage.asObservable();
 
   constructor() {
-    this.prepareWonMatrix();
+    if ((this.rowCount - Math.floor(this.rowCount)) !== 0) {
+      console.log('Nem megfelelő a mezőelosztás');
+    } else {
+      this.prepareWonMatrix();
+    }
   }
 
   generatePlayground(): void {
@@ -54,47 +58,58 @@ export class GameService {
 
   prepareWonMatrix(): void {
     let wonMatrix: any = [];
+    let tempVCord: string[] = [];
     let rowPlus: number = -1;
 
     for (let i_row: number = 0; i_row < this.rowCount; i_row++) {
       rowPlus = i_row * this.rowCount;
-      let colPlus: number = -1;
 
       let colMatrix: [] = [];
 
       for (let i_col: number = 0; i_col < this.colCount; i_col++) {
-        /**/
-         let maxSelectCol: number = i_col + this.victoryCount;
-         if (maxSelectCol <= this.colCount) {
+        let maxSelectCol: number = i_col + this.victoryCount;
+        if (maxSelectCol <= this.colCount) {
 
           let hCoords: number[] = [];
           for (let k_col: number = i_col; k_col < maxSelectCol; k_col++) {
-            hCoords.push(k_col + rowPlus);
+            let rowIndex: number = k_col + rowPlus;
+            hCoords.push(rowIndex);
           }
 
-          wonMatrix.push(hCoords);
-        }
-         /**/
-
-
-        /**
-        let maxSelectRow: number = i_row + this.victoryCount;
-        if (maxSelectRow <= this.rowCount) {
-
-          let vCoords: number[] = [];
-          for (let k_row: number = i_row; k_row < maxSelectRow; k_row++) {
-            colPlus = k_row * this.colCount;
-            console.log(colPlus);
-
-            vCoords.push(k_row + (i_col + colPlus));
+          if (!tempVCord.includes(JSON.stringify(hCoords))) {
+            wonMatrix.push(hCoords);
+            tempVCord.push(JSON.stringify(hCoords));
           }
-
-          wonMatrix.push(vCoords);
         }
-        /**/
 
+        for (let k_col: number = i_col; k_col < this.colCount; k_col++) {
+          let maxSelectRow: number = i_row + this.victoryCount;
 
-        // 0,5,10; 5,10,15
+          if (maxSelectRow <= this.rowCount) {
+            let isEnded: boolean = false;
+            let vCoords: number[] = [];
+
+            for (let k_row: number = i_row; k_row < maxSelectRow; k_row++) {
+              let colIndex: number = k_col + (k_row * this.colCount);
+
+              vCoords.push(colIndex);
+
+              if (colIndex > this.fieldCount) {
+                isEnded = true;
+                break;
+              }
+            }
+
+            if (isEnded) {
+              break;
+            }
+
+            if (!tempVCord.includes(JSON.stringify(vCoords))) {
+              wonMatrix.push(vCoords);
+              tempVCord.push(JSON.stringify(vCoords));
+            }
+          }
+        }
       }
 
       wonMatrix = wonMatrix.concat(colMatrix);
@@ -104,10 +119,6 @@ export class GameService {
   }
 
   checkIfWon(): void {
-
-
-    // for ciklussal menjen végig, hogy milyen koordináta párokon lehet nyerni
-    // soronként
 
   }
 
