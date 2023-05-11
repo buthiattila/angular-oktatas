@@ -8,6 +8,8 @@ import {Coords} from 'src/app/core/types/games/coords.type';
   styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent implements OnInit {
+  fieldCount:number = 25;
+  lineBreak: number = Math.sqrt(this.fieldCount);
   numbers: number[] = [];
   errorMessage: string = '';
 
@@ -15,8 +17,8 @@ export class TicTacToeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.numbers = Array(this.gameService.fieldCount).fill(1);
-    this.gameService.generatePlayground();
+    this.numbers = Array(this.fieldCount).fill(1);
+    this.gameService.generatePlayground(this.fieldCount);
     this.gameService.errorMessage$.subscribe((res) => {
       this.errorMessage = res;
     })

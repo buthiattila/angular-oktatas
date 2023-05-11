@@ -1,6 +1,6 @@
 <div id="playground">
   <ng-container *ngFor="let number of numbers; let i = index">
-    <app-field [lineBreakNeeded]="i%5===0" [index]="i" (coords)="getCoords($event)"></app-field>
+    <app-field [lineBreakNeeded]="i%lineBreak===0" [lineBreak]="lineBreak" [index]="i" (coords)="getCoords($event)"></app-field>
   </ng-container>
   <div *ngIf="errorMessage.length">{{errorMessage}}</div>
 </div>

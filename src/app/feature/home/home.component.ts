@@ -15,11 +15,9 @@ export class HomeComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    console.log("HOME INIT");
   }
 
   ngOnDestroy(): void {
-    console.log("HOME DESTORY");
   }
 
   selectedIndex: number | null = null;

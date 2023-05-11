@@ -9,13 +9,14 @@ import {Coords} from 'src/app/core/types/games/coords.type';
 export class FieldComponent {
 
   @Input() lineBreakNeeded: boolean = false;
+  @Input() lineBreak: number = 0;
   @Input() index: number = 0;
   @Output() coords: EventEmitter<Coords> = new EventEmitter();
 
   fieldClicked(): void {
     const coords: Coords = {
-      i: Math.floor(this.index / 3),
-      j: this.index % 3
+      i: Math.floor(this.index / this.lineBreak),
+      j: this.index % this.lineBreak
     };
     this.coords.emit(coords);
 
