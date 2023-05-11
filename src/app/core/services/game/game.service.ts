@@ -6,7 +6,6 @@ import {BehaviorSubject} from "rxjs";
 })
 export class GameService {
 
-  fieldCount: number = 0;
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
@@ -19,14 +18,18 @@ export class GameService {
   private errorMessage = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessage.asObservable();
 
+  private fieldCount = new BehaviorSubject<number>(0);
+  fieldCount$ = this.fieldCount.asObservable();
+
   constructor() {
   }
 
-  generatePlayground(fieldCount: number, victoryCount: number): void {
+  generatePlayground(colCount: number, victoryCount: number): void {
     this.victoryCount = victoryCount;
-    this.fieldCount = fieldCount;
-    this.rowCount = Math.sqrt(this.fieldCount);
-    this.colCount = Math.sqrt(this.fieldCount);
+    this.fieldCount.next(colCount * colCount);
+    this.colCount = this.rowCount = colCount;
+    this.playerOneSelections = [];
+    this.playerTwoSelections = [];
 
     if (this.victoryCount == 0) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
@@ -36,7 +39,7 @@ export class GameService {
       this.errorMessage.next('Nem megfelelő a mezőelosztás');
     } else {
       this.prepareWonMatrix();
-
+      this.errorMessage.next('');
       this.game = [];
 
       for (let i = 0; i < this.rowCount; i++) {
@@ -141,7 +144,7 @@ export class GameService {
 
               vCoords.push(colIndex);
 
-              if (colIndex > this.fieldCount) {
+              if (colIndex > this.fieldCount.getValue()) {
                 isEnded = true;
                 break;
               }

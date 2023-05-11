@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {GameService} from 'src/app/core/services/game/game.service';
 import {Coords} from 'src/app/core/types/games/coords.type';
 
@@ -8,9 +8,8 @@ import {Coords} from 'src/app/core/types/games/coords.type';
   styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent implements OnInit {
-  fieldCount:number = 25;
   victoryCount: number = 3;
-  lineBreak: number = Math.sqrt(this.fieldCount);
+  colCount: number = 3;
   numbers: number[] = [];
   errorMessage: string = '';
 
@@ -18,11 +17,29 @@ export class TicTacToeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.numbers = Array(this.fieldCount).fill(1);
-    this.gameService.generatePlayground(this.fieldCount,this.victoryCount);
+    this.newGame();
+
     this.gameService.errorMessage$.subscribe((res) => {
       this.errorMessage = res;
-    })
+    });
+
+    this.gameService.fieldCount$.subscribe((res:number)=>{
+      this.numbers = Array(res).fill(1);
+      this.colCount = Math.sqrt(res);
+    });
   }
+
+  onInputChange() {
+    this.newGame();
+  }
+
+  newGame(): void {
+    this.gameService.generatePlayground(this.colCount, this.victoryCount);
+  }
+
+  /*
+slider legyen a pályaméret választó
+   */
+
 
 }

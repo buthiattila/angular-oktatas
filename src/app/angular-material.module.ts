@@ -10,6 +10,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatListModule} from "@angular/material/list";
+import {MatSliderModule} from "@angular/material/slider";
 
 const modules: any[] = [
   MatSlideToggleModule,
@@ -22,7 +23,8 @@ const modules: any[] = [
   MatProgressSpinnerModule,
   MatToolbarModule,
   MatPaginatorModule,
-  MatListModule
+  MatListModule,
+  MatSliderModule
 ];
 
 @NgModule({

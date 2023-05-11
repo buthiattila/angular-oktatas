@@ -11,7 +11,7 @@ import {GameService} from "../../core/services/game/game.service";
 export class FieldComponent {
 
   @Input() lineBreakNeeded: boolean = false;
-  @Input() lineBreak: number = 0;
+  @Input() colCount: number = 0;
   @Input() index: number = 0;
   @Output() coords: EventEmitter<Coords> = new EventEmitter();
 
@@ -22,16 +22,17 @@ export class FieldComponent {
 
   fieldClicked(): void {
     const coords: Coords = {
-      i: Math.floor(this.index / this.lineBreak),
-      j: this.index % this.lineBreak
+      i: Math.floor(this.index / this.colCount),
+      j: this.index % this.colCount
     };
+
     const status = this.gameService.fieldPressed(coords.i, coords.j);
 
     if (status > 0) {
       this.fieldStatus = status;
     }
-    this.coords.emit(coords);
 
+    this.coords.emit(coords);
   }
 
 }
