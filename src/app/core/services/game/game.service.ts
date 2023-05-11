@@ -9,7 +9,7 @@ export class GameService {
   fieldCount: number = 0;
   rowCount: number = 0;
   colCount: number = 0;
-  victoryCount: number = 3;
+  victoryCount: number = 0;
   activePlayerIndex: number = 1;
   game: number[][] = [];
   playerOneSelections: number[] = [];
@@ -21,12 +21,17 @@ export class GameService {
   constructor() {
   }
 
-  generatePlayground(fieldCount: number): void {
+  generatePlayground(fieldCount: number, victoryCount: number): void {
+    this.victoryCount = victoryCount;
     this.fieldCount = fieldCount;
     this.rowCount = Math.sqrt(this.fieldCount);
     this.colCount = Math.sqrt(this.fieldCount);
 
-    if ((this.rowCount - Math.floor(this.rowCount)) !== 0) {
+    if (this.victoryCount == 0) {
+      console.log('A nyeréshez szükséges mezők száma nem lehet 0');
+    } else if (this.victoryCount > this.rowCount) {
+      console.log('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
+    } else if ((this.rowCount - Math.floor(this.rowCount)) !== 0) {
       console.log('Nem megfelelő a mezőelosztás');
     } else {
       this.prepareWonMatrix();
