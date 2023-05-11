@@ -12,8 +12,9 @@ export class GameService {
   victoryCount: number = 0;
   activePlayerIndex: number = 1;
   game: number[][] = [];
+  wonMatrix: number[][] = [];
   playerOneSelections: number[] = [];
-  playerTwoSelections: number[] = [];
+  playerTwoSelections: number[] = []
 
   private errorMessage = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessage.asObservable();
@@ -82,9 +83,9 @@ export class GameService {
     let result: boolean = false;
 
     if (this.activePlayerIndex === 1) {
-      // TODO: itt ellenőrizze a nyerést az 1. játékosra
+      result = this.wonMatrix.some(subArray => this.playerOneSelections.some(num => subArray.includes(num)));
     } else {
-      // TODO: itt ellenőrizze a nyerést a 2. játékosra
+      result = this.wonMatrix.some(subArray => this.playerTwoSelections.some(num => subArray.includes(num)));
     }
 
     return result;
@@ -157,6 +158,7 @@ export class GameService {
       wonMatrix = wonMatrix.concat(colMatrix);
     }
 
+    this.wonMatrix = wonMatrix;
     console.log(wonMatrix);
   }
 
