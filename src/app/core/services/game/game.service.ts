@@ -29,11 +29,11 @@ export class GameService {
     this.colCount = Math.sqrt(this.fieldCount);
 
     if (this.victoryCount == 0) {
-      console.log('A nyeréshez szükséges mezők száma nem lehet 0');
+      this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
     } else if (this.victoryCount > this.rowCount) {
-      console.log('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
+      this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
     } else if ((this.rowCount - Math.floor(this.rowCount)) !== 0) {
-      console.log('Nem megfelelő a mezőelosztás');
+      this.errorMessage.next('Nem megfelelő a mezőelosztás');
     } else {
       this.prepareWonMatrix();
 
@@ -73,7 +73,6 @@ export class GameService {
       }
     } else {
       this.errorMessage.next('Nem írhatod felül a másik játékos mezőjét');
-      console.log('Tiltott mező felülírás');
       status = -1;
     }
 
