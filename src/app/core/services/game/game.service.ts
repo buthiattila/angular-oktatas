@@ -35,8 +35,6 @@ export class GameService {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
     } else if (this.victoryCount > this.rowCount) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
-    } else if ((this.rowCount - Math.floor(this.rowCount)) !== 0) {
-      this.errorMessage.next('Nem megfelelő a mezőelosztás');
     } else {
       this.prepareWonMatrix();
       this.errorMessage.next('');

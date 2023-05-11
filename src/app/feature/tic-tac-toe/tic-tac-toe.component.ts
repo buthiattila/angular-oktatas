@@ -37,9 +37,4 @@ export class TicTacToeComponent implements OnInit {
     this.gameService.generatePlayground(this.colCount, this.victoryCount);
   }
 
-  /*
-slider legyen a pályaméret választó
-   */
-
-
 }
