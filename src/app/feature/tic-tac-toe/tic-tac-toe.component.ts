@@ -25,8 +25,4 @@ export class TicTacToeComponent implements OnInit {
     })
   }
 
-  getCoords(coords: Coords) {
-    this.gameService.fieldPressed(coords.i, coords.j);
-  }
-
 }

@@ -49,7 +49,9 @@ export class GameService {
     }
   }
 
-  fieldPressed(i: number, j: number): void {
+  fieldPressed(i: number, j: number): number {
+    let status = this.activePlayerIndex;
+
     if (this.game[i][j] === 0) {
       let fieldIndex: number = this.getFieldIndex(i, j);
 
@@ -72,7 +74,10 @@ export class GameService {
     } else {
       this.errorMessage.next('Nem írhatod felül a másik játékos mezőjét');
       console.log('Tiltott mező felülírás');
+      status = -1;
     }
+
+    return status;
   }
 
   checkIfFinished(): boolean {
@@ -83,9 +88,9 @@ export class GameService {
     let result: boolean = false;
 
     if (this.activePlayerIndex === 1) {
-      result = this.wonMatrix.some(subArray => this.playerOneSelections.some(num => subArray.includes(num)));
+      result = this.wonMatrix.some(subArray => subArray.every(num => this.playerOneSelections.includes(num)));
     } else {
-      result = this.wonMatrix.some(subArray => this.playerTwoSelections.some(num => subArray.includes(num)));
+      result = this.wonMatrix.some(subArray => subArray.every(num => this.playerTwoSelections.includes(num)));
     }
 
     return result;
