@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Coords} from 'src/app/core/types/games/coords.type';
 
+import {Coords} from 'src/app/core/types/games/coords.type';
 import {GameService} from "../../core/services/game/game.service";
 
 @Component({

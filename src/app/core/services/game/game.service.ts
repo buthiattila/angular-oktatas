@@ -6,6 +6,7 @@ import {BehaviorSubject} from "rxjs";
 })
 export class GameService {
 
+  enableRun: boolean = true;
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
@@ -28,6 +29,7 @@ export class GameService {
   }
 
   generatePlayground(colCount: number, victoryCount: number): void {
+    this.enableRun = true;
     this.victoryCount = victoryCount;
     this.fieldCount.next(colCount * colCount);
     this.colCount = this.rowCount = colCount;
@@ -38,8 +40,10 @@ export class GameService {
 
     if (this.victoryCount == 0) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
+      this.enableRun = false;
     } else if (this.victoryCount > this.rowCount) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
+      this.enableRun = false;
     } else {
       this.prepareWonMatrix();
       this.errorMessage.next('');
@@ -56,10 +60,10 @@ export class GameService {
   }
 
   fieldPressed(i: number, j: number): number {
-    let currentPlayerIndex:number = this.activePlayerIndex.getValue();
-    let status:number = -1;
+    let currentPlayerIndex: number = this.activePlayerIndex.getValue();
+    let status: number = -1;
 
-    if (this.wonPlayerIndex == 0) {
+    if (this.enableRun) {
       status = currentPlayerIndex;
 
       if (this.game[i][j] === 0) {
@@ -76,8 +80,10 @@ export class GameService {
         if (this.checkIfWon()) {
           this.errorMessage.next('A ' + currentPlayerIndex + ' játékos nyert');
           this.wonPlayerIndex = currentPlayerIndex;
+          this.enableRun = false;
         } else if (this.checkIfFinished()) {
           this.errorMessage.next('Nincs több lépési lehetőség');
+          this.enableRun = false;
         } else {
           this.errorMessage.next('');
           this.switchPlayer();

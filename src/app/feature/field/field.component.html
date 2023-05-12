@@ -1,5 +1,5 @@
 <br *ngIf="lineBreakNeeded">
-<div class="field" (click)="fieldClicked()">
+<div class="field" (click)="fieldClicked()" id="{{index}}">
   <div class="marker" [ngClass]="{'selected': fieldStatus}">
     <div *ngIf="fieldStatus == 1; then signFirst;"></div>
     <div *ngIf="fieldStatus == 2; then signSecond;"></div>

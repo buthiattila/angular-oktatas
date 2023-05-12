@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
 import {GameService} from 'src/app/core/services/game/game.service';
-import {Coords} from 'src/app/core/types/games/coords.type';
 
 @Component({
   selector: 'app-tic-tac-toe',
