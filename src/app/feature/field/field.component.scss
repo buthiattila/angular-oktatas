@@ -1,10 +1,10 @@
 .field {
   width: 100px;
   height: 100px;
-  border: 1px solid black;
+  border: 1px solid #848383;
   border-radius: 1rem;
   display: inline-block;
-  margin: 10px;
+  margin: 7.5px;
   position: relative;
 
   .marker {
@@ -17,7 +17,6 @@
       left: 50%;
       -ms-transform: translateY(-50%) translatex(-50%);
       transform: translateY(-50%) translatex(-50%);
-
       content: '';
       border-radius: 1rem;
       background-color: #b9b7b7;
@@ -48,6 +47,12 @@
         left: 50%;
         -ms-transform: translateY(-50%) translatex(-50%);
         transform: translateY(-50%) translatex(-50%);
+
+        .mat-icon {
+          font-size: 4rem !important;
+          height: 100%;
+          width: 100%;
+        }
       }
     }
   }
@@ -56,4 +61,5 @@
 .field.winner .sign {
   background-color: green !important;
 }
+
 

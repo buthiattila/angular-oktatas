@@ -39,7 +39,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
-    this.gameService.generatePlayground(this.colCount, this.victoryCount);
+    this.gameService.newGame(this.colCount, this.victoryCount);
   }
 
 }
