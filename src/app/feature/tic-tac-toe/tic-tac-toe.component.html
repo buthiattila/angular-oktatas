@@ -1,13 +1,20 @@
 <div id="controllers">
-  <mat-slider min="1" max="10" showTickMarks discrete>
-    <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
-  </mat-slider>
-  <button type="button" mat-raised-button color="primary" class="example-full-width" (click)="newGame()">Új játék</button>
+  <div class="flex-fill text-left">
+    Jelenlegi játékos: {{activePlayerIndex}}
+  </div>
+  <div class="flex-fill text-center">
+    <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
+  </div>
+  <div class="flex-fill text-right">
+    <mat-slider min="1" max="10" showTickMarks discrete>
+      <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
+    </mat-slider>
+    <button type="button" mat-raised-button color="primary" class="example-full-width" (click)="newGame()">Új játék</button>
+  </div>
 </div>
 
 <div id="playground">
   <ng-container *ngFor="let number of numbers; let i = index">
     <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
   </ng-container>
-  <div *ngIf="errorMessage.length">{{errorMessage}}</div>
 </div>

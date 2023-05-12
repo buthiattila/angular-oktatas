@@ -12,6 +12,7 @@ export class TicTacToeComponent implements OnInit {
   colCount: number = 3;
   numbers: number[] = [];
   errorMessage: string = '';
+  activePlayerIndex: number = 0;
 
   constructor(private gameService: GameService) {
   }
@@ -23,9 +24,13 @@ export class TicTacToeComponent implements OnInit {
       this.errorMessage = res;
     });
 
-    this.gameService.fieldCount$.subscribe((res:number)=>{
+    this.gameService.fieldCount$.subscribe((res: number) => {
       this.numbers = Array(res).fill(1);
       this.colCount = Math.sqrt(res);
+    });
+
+    this.gameService.activePlayerIndex$.subscribe((res: number) => {
+      this.activePlayerIndex = res;
     });
   }
 

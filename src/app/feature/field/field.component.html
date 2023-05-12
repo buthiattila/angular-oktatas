@@ -1,6 +1,23 @@
 <br *ngIf="lineBreakNeeded">
 <div class="field" (click)="fieldClicked()">
-  <div class="marker">
-    {{(fieldStatus) ? fieldStatus : ""}}
+  <div class="marker" [ngClass]="{'selected': fieldStatus}">
+    <div *ngIf="fieldStatus == 1; then signFirst;"></div>
+    <div *ngIf="fieldStatus == 2; then signSecond;"></div>
   </div>
 </div>
+
+<ng-template #signFirst>
+  <div class="sign sign-first">
+    <div class="sign-icon">
+      <mat-icon fontIcon="close"></mat-icon>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #signSecond>
+  <div class="sign sign-second">
+    <div class="sign-icon">
+      <mat-icon fontIcon="circle"></mat-icon>
+    </div>
+  </div>
+</ng-template>

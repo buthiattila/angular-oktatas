@@ -3,3 +3,27 @@
   width: 100%;
   text-align: center
 }
+
+#controllers {
+  display: flex !important;
+
+  .flex-fill {
+    flex: 1 1 auto !important;
+  }
+
+  .errorMessage {
+    height: 100%;
+  }
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}

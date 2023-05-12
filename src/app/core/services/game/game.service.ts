@@ -9,7 +9,7 @@ export class GameService {
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
-  activePlayerIndex: number = 1;
+  wonPlayerIndex: number = 0;
   game: number[][] = [];
   wonMatrix: number[][] = [];
   playerOneSelections: number[] = [];
@@ -21,6 +21,9 @@ export class GameService {
   private fieldCount = new BehaviorSubject<number>(0);
   fieldCount$ = this.fieldCount.asObservable();
 
+  private activePlayerIndex = new BehaviorSubject<number>(1);
+  activePlayerIndex$ = this.activePlayerIndex.asObservable();
+
   constructor() {
   }
 
@@ -30,6 +33,8 @@ export class GameService {
     this.colCount = this.rowCount = colCount;
     this.playerOneSelections = [];
     this.playerTwoSelections = [];
+    this.wonPlayerIndex = 0;
+    this.activePlayerIndex.next(1);
 
     if (this.victoryCount == 0) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
@@ -51,30 +56,36 @@ export class GameService {
   }
 
   fieldPressed(i: number, j: number): number {
-    let status = this.activePlayerIndex;
+    let currentPlayerIndex:number = this.activePlayerIndex.getValue();
+    let status:number = -1;
 
-    if (this.game[i][j] === 0) {
-      let fieldIndex: number = this.getFieldIndex(i, j);
+    if (this.wonPlayerIndex == 0) {
+      status = currentPlayerIndex;
 
-      this.game[i][j] = this.activePlayerIndex;
+      if (this.game[i][j] === 0) {
+        let fieldIndex: number = this.getFieldIndex(i, j);
 
-      if (this.activePlayerIndex === 1) {
-        this.playerOneSelections.push(fieldIndex);
+        this.game[i][j] = currentPlayerIndex;
+
+        if (currentPlayerIndex === 1) {
+          this.playerOneSelections.push(fieldIndex);
+        } else {
+          this.playerTwoSelections.push(fieldIndex);
+        }
+
+        if (this.checkIfWon()) {
+          this.errorMessage.next('A ' + currentPlayerIndex + ' játékos nyert');
+          this.wonPlayerIndex = currentPlayerIndex;
+        } else if (this.checkIfFinished()) {
+          this.errorMessage.next('Nincs több lépési lehetőség');
+        } else {
+          this.errorMessage.next('');
+          this.switchPlayer();
+        }
       } else {
-        this.playerTwoSelections.push(fieldIndex);
+        this.errorMessage.next('Nem írhatod felül a már kitöltött mezőt');
+        status = -1;
       }
-
-      if (this.checkIfWon()) {
-        this.errorMessage.next('A ' + this.activePlayerIndex + ' játékos nyert');
-      } else if (this.checkIfFinished()) {
-        this.errorMessage.next('Nincs több lépési lehetőség');
-      } else {
-        this.errorMessage.next('');
-        this.switchPlayer();
-      }
-    } else {
-      this.errorMessage.next('Nem írhatod felül a másik játékos mezőjét');
-      status = -1;
     }
 
     return status;
@@ -87,7 +98,7 @@ export class GameService {
   checkIfWon(): boolean {
     let result: boolean = false;
 
-    if (this.activePlayerIndex === 1) {
+    if (this.activePlayerIndex.getValue() === 1) {
       result = this.wonMatrix.some(subArray => subArray.every(num => this.playerOneSelections.includes(num)));
     } else {
       result = this.wonMatrix.some(subArray => subArray.every(num => this.playerTwoSelections.includes(num)));
@@ -97,10 +108,10 @@ export class GameService {
   }
 
   switchPlayer(): void {
-    if (this.activePlayerIndex === 1) {
-      this.activePlayerIndex = 2;
+    if (this.activePlayerIndex.getValue() === 1) {
+      this.activePlayerIndex.next(2);
     } else {
-      this.activePlayerIndex = 1;
+      this.activePlayerIndex.next(1);
     }
   }
 
