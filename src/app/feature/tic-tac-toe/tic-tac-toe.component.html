@@ -6,10 +6,10 @@
     <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
   </div>
   <div class="flex-fill text-right">
-    <mat-slider min="1" max="10" showTickMarks discrete>
+    <mat-slider min="3" max="5" showTickMarks discrete>
       <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
     </mat-slider>
-    <button type="button" mat-raised-button color="primary" class="example-full-width" (click)="newGame()">Új játék</button>
+    <button type="button" mat-raised-button color="primary" (click)="newGame()">Új játék</button>
   </div>
 </div>
 

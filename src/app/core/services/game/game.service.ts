@@ -107,6 +107,15 @@ export class GameService {
     }
   }
 
+  private getFieldIndex(i: number, j: number): number {
+    let index: number = 0;
+    let plus: number = i * this.rowCount;
+
+    index = j + plus;
+
+    return index;
+  }
+
   private switchPlayer(): void {
     if (this.activePlayerIndex.getValue() === 1) {
       this.activePlayerIndex.next(2);
@@ -134,7 +143,7 @@ export class GameService {
   private prepareWonMatrix(): void {
     let wonMatrix: any = [];
     let tempCoord: string[] = [];
-    let rowPlus: number = -1;
+    let rowPlus: number = 0;
 
     for (let i_row: number = 0; i_row < this.rowCount; i_row++) {
       rowPlus = i_row * this.rowCount;
@@ -177,6 +186,7 @@ export class GameService {
 
         if (maxSelectCol <= this.colCount) {
           let hCoords: number[] = [];
+
           for (let k_col: number = i_col; k_col < maxSelectCol; k_col++) {
             hCoords.push(k_col + rowPlus);
           }
@@ -221,15 +231,6 @@ export class GameService {
     }
 
     this.wonMatrix = wonMatrix;
-  }
-
-  private getFieldIndex(i: number, j: number): number {
-    let index: number = 0;
-    let plus: number = i * this.rowCount;
-
-    index = j + plus;
-
-    return index;
   }
 
 }
