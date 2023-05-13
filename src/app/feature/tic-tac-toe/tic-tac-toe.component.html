@@ -14,7 +14,9 @@
 </div>
 
 <div id="playground">
-  <ng-container *ngFor="let number of numbers; let i = index">
-    <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
-  </ng-container>
+  <div id="gameBoard">
+    <ng-container *ngFor="let number of numbers; let i = index">
+      <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
+    </ng-container>
+  </div>
 </div>
