@@ -9,7 +9,7 @@ import {GameService} from 'src/app/core/services/game/game.service';
 })
 export class TicTacToeComponent implements OnInit {
   victoryCount: number = 3;
-  colCount: number = 3;
+  colCount: number = 5;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;

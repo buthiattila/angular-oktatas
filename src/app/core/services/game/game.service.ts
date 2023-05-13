@@ -29,10 +29,12 @@ export class GameService {
   }
 
   newGame(colCount: number, victoryCount: number): void {
-    this.isGameRunning = true;
-    this.victoryCount = victoryCount;
+    let oldFieldCount: number = this.fieldCount.getValue();
+
     this.fieldCount.next(colCount * colCount);
     this.colCount = this.rowCount = colCount;
+    this.victoryCount = victoryCount;
+    this.isGameRunning = true;
     this.playerOneSelections = [];
     this.playerTwoSelections = [];
     this.wonPlayerIndex = 0;
@@ -47,20 +49,11 @@ export class GameService {
     } else {
       this.errorMessage.next('');
 
-      this.prepareWonMatrix();
-      this.generatePlayground();
-    }
-  }
-
-  generatePlayground(): void {
-    this.game = [];
-
-    for (let i = 0; i < this.rowCount; i++) {
-      this.game.push([]);
-
-      for (let j = 0; j < this.colCount; j++) {
-        this.game[i].push(0);
+      if (oldFieldCount !== this.fieldCount.getValue()) {
+        this.prepareWonMatrix();
       }
+
+      this.generatePlayground();
     }
   }
 
@@ -102,6 +95,18 @@ export class GameService {
     return status;
   }
 
+  private generatePlayground(): void {
+    this.game = [];
+
+    for (let i = 0; i < this.rowCount; i++) {
+      this.game.push([]);
+
+      for (let j = 0; j < this.colCount; j++) {
+        this.game[i].push(0);
+      }
+    }
+  }
+
   private switchPlayer(): void {
     if (this.activePlayerIndex.getValue() === 1) {
       this.activePlayerIndex.next(2);
@@ -128,7 +133,7 @@ export class GameService {
 
   private prepareWonMatrix(): void {
     let wonMatrix: any = [];
-    let tempVCord: string[] = [];
+    let tempCoord: string[] = [];
     let rowPlus: number = -1;
 
     for (let i_row: number = 0; i_row < this.rowCount; i_row++) {
@@ -137,18 +142,48 @@ export class GameService {
       let colMatrix: [] = [];
 
       for (let i_col: number = 0; i_col < this.colCount; i_col++) {
+        let rowIndex: number = i_col + rowPlus;
         let maxSelectCol: number = i_col + this.victoryCount;
-        if (maxSelectCol <= this.colCount) {
+        let rdCoords: number[] = [];
+        let ldCoords: number[] = [];
 
-          let hCoords: number[] = [];
-          for (let k_col: number = i_col; k_col < maxSelectCol; k_col++) {
-            let rowIndex: number = k_col + rowPlus;
-            hCoords.push(rowIndex);
+        for (let k_diag: number = 0; k_diag < this.victoryCount; k_diag++) {
+          if (maxSelectCol <= this.colCount) {
+            let rdIndex: number = rowIndex + (k_diag * (this.colCount + 1));
+
+            if (rdIndex < this.fieldCount.getValue()) {
+              rdCoords.push(rdIndex);
+            }
           }
 
-          if (!tempVCord.includes(JSON.stringify(hCoords))) {
+          if (i_col >= (this.victoryCount - 1)) {
+            let ldIndex: number = rowIndex + (k_diag * (this.colCount - 1));
+
+            if (ldIndex < this.fieldCount.getValue()) {
+              ldCoords.push(ldIndex);
+            }
+          }
+        }
+
+        if (rdCoords.length === this.victoryCount) {
+          wonMatrix.push(rdCoords);
+          tempCoord.push(JSON.stringify(rdCoords));
+        }
+
+        if (ldCoords.length === this.victoryCount) {
+          wonMatrix.push(ldCoords);
+          tempCoord.push(JSON.stringify(ldCoords));
+        }
+
+        if (maxSelectCol <= this.colCount) {
+          let hCoords: number[] = [];
+          for (let k_col: number = i_col; k_col < maxSelectCol; k_col++) {
+            hCoords.push(k_col + rowPlus);
+          }
+
+          if (!tempCoord.includes(JSON.stringify(hCoords))) {
             wonMatrix.push(hCoords);
-            tempVCord.push(JSON.stringify(hCoords));
+            tempCoord.push(JSON.stringify(hCoords));
           }
         }
 
@@ -174,9 +209,9 @@ export class GameService {
               break;
             }
 
-            if (!tempVCord.includes(JSON.stringify(vCoords))) {
+            if (!tempCoord.includes(JSON.stringify(vCoords))) {
               wonMatrix.push(vCoords);
-              tempVCord.push(JSON.stringify(vCoords));
+              tempCoord.push(JSON.stringify(vCoords));
             }
           }
         }
@@ -186,7 +221,6 @@ export class GameService {
     }
 
     this.wonMatrix = wonMatrix;
-    console.log(wonMatrix);
   }
 
   private getFieldIndex(i: number, j: number): number {
