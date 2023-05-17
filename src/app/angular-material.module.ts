@@ -11,6 +11,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatListModule} from "@angular/material/list";
 import {MatSliderModule} from "@angular/material/slider";
+import {MatRippleModule} from "@angular/material/core";
 
 const modules: any[] = [
   MatSlideToggleModule,
@@ -24,7 +25,8 @@ const modules: any[] = [
   MatToolbarModule,
   MatPaginatorModule,
   MatListModule,
-  MatSliderModule
+  MatSliderModule,
+  MatRippleModule
 ];
 
 @NgModule({
