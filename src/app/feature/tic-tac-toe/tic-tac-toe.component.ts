@@ -12,6 +12,7 @@ export class TicTacToeComponent implements OnInit {
   maxColCount: number = 5;
   colCount: number = 4;
   victoryCount: number = 3;
+  playerCount: number = 4;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;
@@ -41,7 +42,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
-    this.gameService.newGame(this.colCount, this.victoryCount);
+    this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
   }
 
 }

@@ -3,6 +3,8 @@
   <div class="marker" [ngClass]="{'selected': fieldStatus}" matRipple>
     <div *ngIf="fieldStatus == 1; then signFirst;"></div>
     <div *ngIf="fieldStatus == 2; then signSecond;"></div>
+    <div *ngIf="fieldStatus == 3; then signThird;"></div>
+    <div *ngIf="fieldStatus == 4; then signFourth;"></div>
   </div>
 </div>
 
@@ -18,6 +20,22 @@
   <div class="sign sign-second">
     <div class="sign-icon">
       <mat-icon fontIcon="radio_button_unchecked"></mat-icon>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #signThird>
+  <div class="sign sign-third">
+    <div class="sign-icon">
+      <mat-icon fontIcon="check_box_outline_blank"></mat-icon>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #signFourth>
+  <div class="sign sign-fourth">
+    <div class="sign-icon">
+      <mat-icon fontIcon="change_history"></mat-icon>
     </div>
   </div>
 </ng-template>

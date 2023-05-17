@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
+import {Product} from "../../types/product/category.type";
 
 @Injectable({
   providedIn: 'root'
@@ -10,11 +11,11 @@ export class GameService {
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
+  playerCount: number = 0;
   wonPlayerIndex: number = 0;
   game: number[][] = [];
   wonMatrix: number[][] = [];
-  playerOneSelections: number[] = [];
-  playerTwoSelections: number[] = []
+  playerSelections: any = [];
 
   private gameId = new BehaviorSubject<number>(1);
   gameId$ = this.gameId.asObservable();
@@ -31,19 +32,24 @@ export class GameService {
   constructor() {
   }
 
-  newGame(colCount: number, victoryCount: number): void {
+  newGame(colCount: number, victoryCount: number, playerCount: number): void {
     let oldFieldCount: number = this.fieldCount.getValue();
 
     this.fieldCount.next(colCount * colCount);
     this.colCount = this.rowCount = colCount;
     this.victoryCount = victoryCount;
+    this.playerCount = playerCount;
     this.isGameRunning = true;
-    this.playerOneSelections = [];
-    this.playerTwoSelections = [];
     this.wonPlayerIndex = 0;
     this.activePlayerIndex.next(1);
 
-    if (this.victoryCount == 0) {
+    if (this.playerCount == 0) {
+      this.errorMessage.next('A játékosok száma nem lehet 0');
+      this.isGameRunning = false;
+    } else if (this.playerCount > this.colCount) {
+      this.errorMessage.next('A játékosok száma nem lehet arányaiban nagyobb a pálya méreténél');
+      this.isGameRunning = false;
+    } else if (this.victoryCount == 0) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet 0');
       this.isGameRunning = false;
     } else if (this.victoryCount > this.rowCount) {
@@ -57,6 +63,7 @@ export class GameService {
         this.prepareWonMatrix();
       }
 
+      this.preparePlayerSelections();
       this.generatePlayground();
     }
   }
@@ -73,11 +80,7 @@ export class GameService {
 
         this.game[i][j] = currentPlayerIndex;
 
-        if (currentPlayerIndex === 1) {
-          this.playerOneSelections.push(fieldIndex);
-        } else {
-          this.playerTwoSelections.push(fieldIndex);
-        }
+        this.playerSelections[currentPlayerIndex].push(fieldIndex);
 
         if (this.checkIfWon()) {
           this.errorMessage.next('A ' + currentPlayerIndex + ' játékos nyert');
@@ -121,10 +124,10 @@ export class GameService {
   }
 
   private switchPlayer(): void {
-    if (this.activePlayerIndex.getValue() === 1) {
-      this.activePlayerIndex.next(2);
-    } else {
+    if (this.activePlayerIndex.getValue() === this.playerCount) {
       this.activePlayerIndex.next(1);
+    } else {
+      this.activePlayerIndex.next(this.activePlayerIndex.getValue() + 1);
     }
   }
 
@@ -133,15 +136,13 @@ export class GameService {
   }
 
   private checkIfWon(): boolean {
-    let result: boolean = false;
+    return this.wonMatrix.some(subArray => subArray.every(num => this.playerSelections[this.activePlayerIndex.getValue()].includes(num)));
+  }
 
-    if (this.activePlayerIndex.getValue() === 1) {
-      result = this.wonMatrix.some(subArray => subArray.every(num => this.playerOneSelections.includes(num)));
-    } else {
-      result = this.wonMatrix.some(subArray => subArray.every(num => this.playerTwoSelections.includes(num)));
+  private preparePlayerSelections(): void {
+    for (let i: number = 0; i < this.playerCount; i++) {
+      this.playerSelections[i + 1] = [];
     }
-
-    return result;
   }
 
   private prepareWonMatrix(): void {
