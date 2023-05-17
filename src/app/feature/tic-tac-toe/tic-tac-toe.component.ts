@@ -8,8 +8,10 @@ import {GameService} from 'src/app/core/services/game/game.service';
   styleUrls: ['./tic-tac-toe.component.scss']
 })
 export class TicTacToeComponent implements OnInit {
-  victoryCount: number = 3;
+  minColCount: number = 3;
+  maxColCount: number = 5;
   colCount: number = 4;
+  victoryCount: number = 3;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;

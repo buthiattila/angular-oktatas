@@ -6,7 +6,7 @@
     <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
   </div>
   <div class="flex-fill text-right">
-    <mat-slider min="3" max="5" showTickMarks discrete>
+    <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete>
       <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
     </mat-slider>
     <button type="button" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 import {Coords} from 'src/app/core/types/games/coords.type';
 import {GameService} from "../../core/services/game/game.service";
@@ -8,7 +8,7 @@ import {GameService} from "../../core/services/game/game.service";
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })
-export class FieldComponent {
+export class FieldComponent implements OnInit {
 
   @Input() lineBreakNeeded: boolean = false;
   @Input() colCount: number = 0;
@@ -16,8 +16,18 @@ export class FieldComponent {
   @Output() coords: EventEmitter<Coords> = new EventEmitter();
 
   fieldStatus: number = 0;
+  gameId: number = 0;
 
   constructor(private gameService: GameService) {
+  }
+
+  ngOnInit() {
+    this.gameService.gameId$.subscribe((res: number) => {
+      if (this.gameId !== res) {
+        this.gameId = res;
+        this.fieldStatus = 0;
+      }
+    });
   }
 
   fieldClicked(): void {

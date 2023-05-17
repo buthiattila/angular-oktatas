@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {Subject, BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,9 @@ export class GameService {
   wonMatrix: number[][] = [];
   playerOneSelections: number[] = [];
   playerTwoSelections: number[] = []
+
+  private gameId = new BehaviorSubject<number>(1);
+  gameId$ = this.gameId.asObservable();
 
   private errorMessage = new BehaviorSubject<string>('');
   errorMessage$ = this.errorMessage.asObservable();
@@ -48,6 +51,7 @@ export class GameService {
       this.isGameRunning = false;
     } else {
       this.errorMessage.next('');
+      this.gameId.next(Math.floor(Math.random() * 100000000));
 
       if (oldFieldCount !== this.fieldCount.getValue()) {
         this.prepareWonMatrix();
