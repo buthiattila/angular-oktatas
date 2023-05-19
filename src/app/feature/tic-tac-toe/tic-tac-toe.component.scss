@@ -1,10 +1,16 @@
+.row {
+  display: flex;
+}
+
+.c20 {
+  width: 300px;
+}
+
+.c80 {
+  flex-grow: 1!important;
+}
+
 #controllers {
-  display: flex !important;
-
-  .flex-fill {
-    flex: 1 1 auto !important;
-  }
-
   .errorMessage {
     height: 100%;
   }
@@ -12,14 +18,12 @@
 
 #playground {
   background-color: #FFFFFF;
-  text-align: center;
 
   #gameBoard {
     background-color: #ececec;
     width: fit-content;
     height: fit-content;
     padding: 2rem 2.5rem;
-    margin: auto;
     border-radius: 2rem;
     box-shadow: 14px 14px 15px -3px rgba(0, 0, 0, 0.1);
   }

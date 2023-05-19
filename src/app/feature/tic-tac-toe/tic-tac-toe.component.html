@@ -1,31 +1,30 @@
-<div class="container-fluid">
-  <div class="row">
-    <div>
-      <div id="controllers">
-        <div>Szoba azonosító: <span *ngIf="lobbyId">{{lobbyId}}</span></div>
-        <div>Jelenlegi játékos: {{activePlayerIndex}}</div>
-        <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
-        <div>
-          <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete>
-            <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
-          </mat-slider>
-          <button type="button" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
-        </div>
-        <div>
-          <input [(ngModel)]="lobbyId" type="number">
-          <button type="button" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz
-          </button>
-        </div>
+<div class="row">
+  <div class="c20">
+    <div id="controllers">
+      <div>Szoba azonosító: <span *ngIf="lobbyId">{{lobbyId}}</span></div>
+      <div>Jelenlegi játékos: {{activePlayerIndex}}</div>
+      <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
+      <div>
+        <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete>
+          <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
+        </mat-slider>
+        <button type="button" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
+      </div>
+      <div>
+        <input [(ngModel)]="lobbyId" type="number">
+        <button type="button" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz
+        </button>
       </div>
     </div>
-    <div>
-      <div id="playground">
-        <div id="gameBoard">
-          <ng-container *ngFor="let number of numbers; let i = index">
-            <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
-          </ng-container>
-        </div>
+  </div>
+  <div class="c80">
+    <div id="playground">
+      <div id="gameBoard">
+        <ng-container *ngFor="let number of numbers; let i = index">
+          <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
+
