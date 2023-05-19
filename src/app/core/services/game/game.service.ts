@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Product} from "../../types/product/category.type";
+
+import {MultiplayerService} from "./multiplayer.service";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class GameService {
   private activePlayerIndex = new BehaviorSubject<number>(1);
   activePlayerIndex$ = this.activePlayerIndex.asObservable();
 
-  constructor() {
+  constructor(private multiplayer: MultiplayerService) {
   }
 
   newGame(colCount: number, victoryCount: number, playerCount: number): void {
@@ -237,5 +238,14 @@ export class GameService {
 
     this.wonMatrix = wonMatrix;
   }
+
+  joinLobby(lobbyId: number) {
+    this.gameId.next(lobbyId);
+
+    this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
+      this.switchPlayer();
+    });
+  }
+
 
 }

@@ -16,6 +16,7 @@ export class TicTacToeComponent implements OnInit {
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;
+  lobbyId: number = 0;
 
   constructor(private gameService: GameService) {
   }
@@ -43,6 +44,10 @@ export class TicTacToeComponent implements OnInit {
 
   newGame(): void {
     this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
+  }
+
+  joinToLobby(): void {
+    this.gameService.joinLobby(this.lobbyId);
   }
 
 }

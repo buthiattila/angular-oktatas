@@ -5,6 +5,12 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app';
+import {getDatabase, provideDatabase} from '@angular/fire/database';
+import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
+import {FIREBASE_OPTIONS} from '@angular/fire/compat';
+
+import {environment} from '../environments/environment';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AngularMaterialModule} from "./angular-material.module";
@@ -67,9 +73,12 @@ import {FieldComponent} from "./feature/field/field.component";
     AccountModule,
     AccountRoutingModule,
     TodoListModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideDatabase(() => getDatabase()),
+    AngularFireDatabaseModule
   ],
-  providers: [],
+  providers: [{provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
