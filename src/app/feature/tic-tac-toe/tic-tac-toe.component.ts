@@ -12,6 +12,7 @@ export class TicTacToeComponent implements OnInit {
   minColCount: number = 3;
   maxColCount: number = 5;
   defaultColCount: number = 4;
+  planColCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 3;
   playerCount: number = 2;
@@ -50,15 +51,17 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
-    if (this.colCount === 0) {
+    if (this.planColCount === 0) {
       this.colCount = 4;
+    } else {
+      this.colCount = this.planColCount;
     }
 
     this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
   }
 
-  joinToLobby(): void {
-    this.gameService.joinLobby(this.lobbyId);
+  joinGame(): void {
+    this.gameService.joinGame(this.lobbyId);
   }
 
 }

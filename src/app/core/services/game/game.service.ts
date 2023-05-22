@@ -45,7 +45,7 @@ export class GameService {
     this.playerCount = playerCount;
     this.isGameRunning = true;
     this.wonPlayerIndex = 0;
-    this.activePlayerIndex.next(1);
+    this.activePlayerIndex.next(0);
 
     if (this.playerCount == 0) {
       this.errorMessage.next('A játékosok száma nem lehet 0');
@@ -70,18 +70,43 @@ export class GameService {
       this.preparePlayerSelections();
       this.generatePlayground();
 
-      this.multiplayer.createLobby(this.gameId.getValue(), this.game);
-      this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
+      this.multiplayer.createLobby(this.gameId.getValue(), this.game).subscribe((res: any) => {
         this.gameSubj.next(JSON.parse(res[0]));
 
-        console.log(res[0]);
+        this.refreshPlayGround();
       });
     }
 
     return this.gameId.getValue();
   }
 
-  async fieldPressed(i: number, j: number):Promise<number> {
+  joinGame(lobbyId: number) { // 24015910
+    this.gameId.next(lobbyId);
+
+    this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
+      this.gameSubj.next(JSON.parse(res[0]));
+
+      // TODO: ezeket mind meg kell kapni a db-ből, hogy a felületet fel lehessen építeni
+      let colCount:number = 4;
+      let victoryCount:number = 4;
+      let playerCount:number = 4;
+      let isGameRunning:boolean = true;
+      let wonPlayerIndex:number = res[1];
+
+      this.fieldCount.next(colCount * colCount);
+      this.colCount = this.rowCount = colCount;
+      this.victoryCount = victoryCount;
+      this.playerCount = playerCount;
+      this.isGameRunning = isGameRunning;
+      this.wonPlayerIndex = wonPlayerIndex;
+
+      this.prepareWonMatrix();
+      this.preparePlayerSelections();
+      this.refreshPlayGround();
+    });
+  }
+
+  async fieldPressed(i: number, j: number): Promise<number> {
     let currentPlayerIndex: number = this.activePlayerIndex.getValue();
     let status: number = -1;
 
@@ -110,7 +135,6 @@ export class GameService {
           this.isGameRunning = false;
         } else {
           this.errorMessage.next('');
-          this.switchPlayer();
         }
       } else {
         this.errorMessage.next('Nem írhatod felül a már kitöltött mezőt');
@@ -145,6 +169,13 @@ export class GameService {
     }
 
     this.gameSubj.next(this.game);
+  }
+
+  private refreshPlayGround(): void {
+    this.switchPlayer();
+
+    console.log(this.gameSubj.getValue());
+
   }
 
   private getFieldIndex(i: number, j: number): number {
@@ -266,16 +297,5 @@ export class GameService {
 
     this.wonMatrix = wonMatrix;
   }
-
-  joinLobby(lobbyId: number) {
-    this.gameId.next(lobbyId);
-
-    this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
-      this.gameSubj.next(JSON.parse(res[0]));
-
-      console.log(res[0]);
-    });
-  }
-
 
 }

@@ -5,7 +5,7 @@
       <div>Jelenlegi játékos: {{activePlayerIndex}}</div>
       <div>
         <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete class="w-90">
-          <input matSliderThumb [(ngModel)]="colCount" (input)="newGame()">
+          <input matSliderThumb [(ngModel)]="planColCount">
         </mat-slider>
       </div>
       <div>
@@ -19,7 +19,7 @@
         </mat-form-field>
       </div>
       <div>
-        <button type="button" class="w-90" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz</button>
+        <button type="button" class="w-90" mat-raised-button matRipple color="primary" (click)="joinGame()">Csatlakozás játékhoz</button>
       </div>
       <div class="errorMessage w-90" *ngIf="errorMessage.length">{{errorMessage}}</div>
     </div>

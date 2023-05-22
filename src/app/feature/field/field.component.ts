@@ -15,7 +15,7 @@ export class FieldComponent implements OnInit {
   @Input() index: number = 0;
   @Output() coords: EventEmitter<Coords> = new EventEmitter();
 
-  fieldStatus: number = 0;
+  @Input() fieldStatus: number = 0;
   gameId: number = 0;
 
   constructor(private gameService: GameService) {

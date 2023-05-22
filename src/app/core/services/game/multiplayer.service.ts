@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {BehaviorSubject, Observable} from 'rxjs';
 
 import {IMultiplayerService} from './multiplayer.interface';
 
@@ -24,9 +23,11 @@ export class MultiplayerService implements IMultiplayerService {
 
   }
 
-  createLobby(id: number, game: number[][]): void {
+  createLobby(id: number, game: number[][]): any {
     let lobbyRef = this.db.object(id.toString());
     lobbyRef.set({game: JSON.stringify(game), winner: 0});
+
+    return this.joinLobby(id);
   }
 
   joinLobby(id: number): any {
