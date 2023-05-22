@@ -18,6 +18,7 @@ export class TicTacToeComponent implements OnInit {
   errorMessage: string = '';
   activePlayerIndex: number = 0;
   lobbyId: number = 0;
+  game: number[][] = [];
   private unsubscribe = new Subject<void>();
 
   constructor(private gameService: GameService) {
@@ -29,7 +30,9 @@ export class TicTacToeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newGame();
+    this.gameService.game$.subscribe(res => {
+      this.game = res;
+    });
 
     this.gameService.errorMessage$.pipe(takeUntil(this.unsubscribe)).subscribe((res) => {
       this.errorMessage = res;
@@ -46,7 +49,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
-    this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
+    this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
   }
 
   joinToLobby(): void {

@@ -30,13 +30,13 @@ export class FieldComponent implements OnInit {
     });
   }
 
-  fieldClicked(): void {
+  async fieldClicked() {
     const coords: Coords = {
       i: Math.floor(this.index / this.colCount),
       j: this.index % this.colCount
     };
 
-    const status = this.gameService.fieldPressed(coords.i, coords.j);
+    const status = await this.gameService.fieldPressed(coords.i, coords.j);
 
     if (status > 0) {
       this.fieldStatus = status;

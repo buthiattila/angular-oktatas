@@ -27,13 +27,16 @@ export class GameService {
   private fieldCount = new BehaviorSubject<number>(0);
   fieldCount$ = this.fieldCount.asObservable();
 
-  private activePlayerIndex = new BehaviorSubject<number>(1);
+  private activePlayerIndex = new BehaviorSubject<number>(0);
   activePlayerIndex$ = this.activePlayerIndex.asObservable();
+
+  private gameSubj: BehaviorSubject<number[][]> = new BehaviorSubject([[1]]);
+  game$ = this.gameSubj.asObservable();
 
   constructor(private multiplayer: MultiplayerService) {
   }
 
-  newGame(colCount: number, victoryCount: number, playerCount: number): void {
+  newGame(colCount: number, victoryCount: number, playerCount: number): number {
     let oldFieldCount: number = this.fieldCount.getValue();
 
     this.fieldCount.next(colCount * colCount);
@@ -66,10 +69,19 @@ export class GameService {
 
       this.preparePlayerSelections();
       this.generatePlayground();
+
+      this.multiplayer.createLobby(this.gameId.getValue(), this.game);
+      this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
+        this.gameSubj.next(JSON.parse(res[0]));
+
+        console.log(res[0]);
+      });
     }
+
+    return this.gameId.getValue();
   }
 
-  fieldPressed(i: number, j: number): number {
+  async fieldPressed(i: number, j: number):Promise<number> {
     let currentPlayerIndex: number = this.activePlayerIndex.getValue();
     let status: number = -1;
 
@@ -79,7 +91,13 @@ export class GameService {
       if (this.game[i][j] === 0) {
         let fieldIndex: number = this.getFieldIndex(i, j);
 
+        this.game = this.gameSubj.getValue();
         this.game[i][j] = currentPlayerIndex;
+
+        this.gameSubj.next(this.game);
+        if (this.gameId) {
+          this.multiplayer.updateGameState(this.gameId.getValue(), this.game);
+        }
 
         this.playerSelections[currentPlayerIndex].push(fieldIndex);
 
@@ -103,6 +121,18 @@ export class GameService {
     return status;
   }
 
+  getNextPlayer(): number {
+    let nextPlayer: number = -1;
+
+    if (this.activePlayerIndex.getValue() === this.playerCount) {
+      nextPlayer = 1;
+    } else {
+      nextPlayer = this.activePlayerIndex.getValue() + 1;
+    }
+
+    return nextPlayer;
+  }
+
   private generatePlayground(): void {
     this.game = [];
 
@@ -113,6 +143,8 @@ export class GameService {
         this.game[i].push(0);
       }
     }
+
+    this.gameSubj.next(this.game);
   }
 
   private getFieldIndex(i: number, j: number): number {
@@ -125,11 +157,7 @@ export class GameService {
   }
 
   private switchPlayer(): void {
-    if (this.activePlayerIndex.getValue() === this.playerCount) {
-      this.activePlayerIndex.next(1);
-    } else {
-      this.activePlayerIndex.next(this.activePlayerIndex.getValue() + 1);
-    }
+    this.activePlayerIndex.next(this.getNextPlayer());
   }
 
   private checkIfFinished(): boolean {
@@ -243,7 +271,9 @@ export class GameService {
     this.gameId.next(lobbyId);
 
     this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
-      this.switchPlayer();
+      this.gameSubj.next(JSON.parse(res[0]));
+
+      console.log(res[0]);
     });
   }
 
