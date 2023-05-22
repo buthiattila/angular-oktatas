@@ -9,13 +9,14 @@
         </mat-slider>
       </div>
       <div>
+        <button type="button" class="w-90" style="margin-bottom:1rem;" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
+      </div>
+      <hr>
+      <div>
         <mat-form-field class="w-90">
           <mat-label>Játék azonosítója</mat-label>
           <input [(ngModel)]="lobbyId" type="number" matInput>
         </mat-form-field>
-      </div>
-      <div>
-        <button type="button" class="w-90" style="margin-bottom:1rem;" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
       </div>
       <div>
         <button type="button" class="w-90" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz</button>
