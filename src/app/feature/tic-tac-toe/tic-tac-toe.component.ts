@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 import {GameService} from 'src/app/core/services/game/game.service';
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-tic-tac-toe',
@@ -12,34 +13,36 @@ export class TicTacToeComponent implements OnInit {
   maxColCount: number = 5;
   colCount: number = 4;
   victoryCount: number = 3;
-  playerCount: number = 4;
+  playerCount: number = 2;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;
   lobbyId: number = 0;
+  private unsubscribe = new Subject<void>();
 
   constructor(private gameService: GameService) {
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   ngOnInit() {
     this.newGame();
 
-    this.gameService.errorMessage$.subscribe((res) => {
+    this.gameService.errorMessage$.pipe(takeUntil(this.unsubscribe)).subscribe((res) => {
       this.errorMessage = res;
     });
 
-    this.gameService.fieldCount$.subscribe((res: number) => {
+    this.gameService.fieldCount$.pipe(takeUntil(this.unsubscribe)).subscribe((res: number) => {
       this.numbers = Array(res).fill(1);
       this.colCount = Math.sqrt(res);
     });
 
-    this.gameService.activePlayerIndex$.subscribe((res: number) => {
+    this.gameService.activePlayerIndex$.pipe(takeUntil(this.unsubscribe)).subscribe((res: number) => {
       this.activePlayerIndex = res;
     });
-  }
-
-  onInputChange() {
-    this.newGame();
   }
 
   newGame(): void {

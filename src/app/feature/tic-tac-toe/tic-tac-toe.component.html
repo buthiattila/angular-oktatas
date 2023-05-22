@@ -3,18 +3,24 @@
     <div id="controllers">
       <div>Szoba azonosító: <span *ngIf="lobbyId">{{lobbyId}}</span></div>
       <div>Jelenlegi játékos: {{activePlayerIndex}}</div>
-      <div class="errorMessage" *ngIf="errorMessage.length">{{errorMessage}}</div>
       <div>
-        <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete>
-          <input matSliderThumb [(ngModel)]="colCount" (input)="onInputChange()">
+        <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete class="w-90">
+          <input matSliderThumb [(ngModel)]="colCount" (input)="newGame()">
         </mat-slider>
-        <button type="button" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
       </div>
       <div>
-        <input [(ngModel)]="lobbyId" type="number">
-        <button type="button" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz
-        </button>
+        <mat-form-field class="w-90">
+          <mat-label>Játék azonosítója</mat-label>
+          <input [(ngModel)]="lobbyId" type="number" matInput>
+        </mat-form-field>
       </div>
+      <div>
+        <button type="button" class="w-90" style="margin-bottom:1rem;" mat-raised-button matRipple color="primary" (click)="newGame()">Új játék</button>
+      </div>
+      <div>
+        <button type="button" class="w-90" mat-raised-button matRipple color="primary" (click)="joinToLobby()">Csatlakozás játékhoz</button>
+      </div>
+      <div class="errorMessage w-90" *ngIf="errorMessage.length">{{errorMessage}}</div>
     </div>
   </div>
   <div class="c80">

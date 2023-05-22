@@ -7,12 +7,19 @@
 }
 
 .c80 {
-  flex-grow: 1!important;
+  flex-grow: 1 !important;
 }
 
 #controllers {
+  .w-90 {
+    width: 90%;
+  }
+
   .errorMessage {
-    height: 100%;
+    margin-top: 2rem;
+    background-color: red;
+    color: white;
+    padding: .2rem .5rem;
   }
 }
 
