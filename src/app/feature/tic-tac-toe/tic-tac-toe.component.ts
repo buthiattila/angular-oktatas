@@ -11,7 +11,8 @@ import {Subject, takeUntil} from "rxjs";
 export class TicTacToeComponent implements OnInit {
   minColCount: number = 3;
   maxColCount: number = 5;
-  colCount: number = 4;
+  defaultColCount: number = 4;
+  colCount: number = 0;
   victoryCount: number = 3;
   playerCount: number = 2;
   numbers: number[] = [];
@@ -49,6 +50,10 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
+    if (this.colCount === 0) {
+      this.colCount = 4;
+    }
+
     this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
   }
 
