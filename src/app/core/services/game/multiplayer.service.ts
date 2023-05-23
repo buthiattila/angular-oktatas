@@ -8,6 +8,8 @@ import {IMultiplayerService} from './multiplayer.interface';
 })
 export class MultiplayerService implements IMultiplayerService {
 
+  playerId: number = 0;
+
   constructor(private db: AngularFireDatabase) {
 
     /* this.db.list('item').valueChanges().subscribe((res)=>{
@@ -23,14 +25,23 @@ export class MultiplayerService implements IMultiplayerService {
 
   }
 
-  createLobby(id: number, game: number[][], victoryCount: number, playerCount: number): any {
+  setPlayerId(playerId: number): void {
+    this.playerId = playerId;
+  }
+
+  createLobby(id: number, game: number[][], victoryCount: number, maxPlayerCount: number, playerSelections: any): any {
+    let joinedPlayers: number[] = [0, this.playerId];
+
     let lobbyRef = this.db.object(id.toString());
     lobbyRef.set({
       game: {
         gameMatrix: JSON.stringify(game),
+        activePlayerIndex: 1,
         wonPlayerIndex: 0,
         victoryCount: victoryCount,
-        playerCount: playerCount
+        maxPlayerCount: maxPlayerCount,
+        playerSelections: JSON.stringify(playerSelections),
+        joinedPlayers: joinedPlayers,
       }
     });
 
@@ -41,9 +52,23 @@ export class MultiplayerService implements IMultiplayerService {
     return this.db.list(id.toString()).valueChanges();
   }
 
-  updateGameState(id: number, game: number[][]): void {
+  updateGameState(id: number, game: number[][], playerSelections: any, activePlayerIndex: number, wonPlayerIndex: number): void {
     let lobbyRef = this.db.object(id.toString() + '/game');
-    lobbyRef.update({gameMatrix: JSON.stringify(game)});
+    lobbyRef.update({
+      gameMatrix: JSON.stringify(game),
+      playerSelections: JSON.stringify(playerSelections),
+      activePlayerIndex: activePlayerIndex,
+      wonPlayerIndex: wonPlayerIndex
+    });
+  }
+
+  updateJoinedPlayers(id: number, joinedPlayers: number[]): void {
+    joinedPlayers.push(this.playerId);
+
+    let lobbyRef = this.db.object(id.toString() + '/game');
+    lobbyRef.update({
+      joinedPlayers: joinedPlayers
+    });
   }
 
 }

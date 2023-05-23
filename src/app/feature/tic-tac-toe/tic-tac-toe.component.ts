@@ -15,7 +15,7 @@ export class TicTacToeComponent implements OnInit {
   planColCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 3;
-  playerCount: number = 2;
+  maxPlayerCount: number = 2;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;
@@ -52,7 +52,7 @@ export class TicTacToeComponent implements OnInit {
 
   newGame(): void {
     this.colCount = (this.planColCount === 0 ? this.defaultColCount : this.planColCount);
-    this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
+    this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.maxPlayerCount);
   }
 
   joinGame(): void {

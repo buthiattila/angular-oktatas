@@ -8,15 +8,17 @@ import {MultiplayerService} from "./multiplayer.service";
 })
 export class GameService {
 
+  newJoining: boolean = false;
   playEnable: boolean = true;
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
-  playerCount: number = 0;
+  maxPlayerCount: number = 0;
   wonPlayerIndex: number = 0;
   wonMatrix: number[][] = [];
   playerSelections: any = [];
-  currentPlayerIndex: number = 0;
+  joinedPlayers: any = [];
+  playerId: number = Math.floor(Math.random() * 100000000);
 
   private gameId = new BehaviorSubject<number>(1);
   gameId$ = this.gameId.asObservable();
@@ -34,18 +36,19 @@ export class GameService {
   game$ = this.gameMatrix.asObservable();
 
   constructor(private multiplayer: MultiplayerService) {
+    this.multiplayer.setPlayerId(this.playerId);
   }
 
-  newGame(colCount: number, victoryCount: number, playerCount: number): number {
+  newGame(colCount: number, victoryCount: number, maxPlayerCount: number): number {
     let oldFieldCount: number = this.fieldCount.getValue();
 
     this.fieldCount.next(colCount * colCount);
     this.colCount = this.rowCount = colCount;
     this.victoryCount = victoryCount;
-    this.playerCount = playerCount;
+    this.maxPlayerCount = maxPlayerCount;
     this.wonPlayerIndex = 0;
     this.activePlayerIndex.next(0);
-    this.playEnable = this.preCheck();
+    this.playEnable = this.preCheckGeneration();
 
     if (this.playEnable) {
       this.errorMessage.next('');
@@ -55,12 +58,16 @@ export class GameService {
         this.prepareWonMatrix();
       }
 
-      this.generatePlayground();
       this.preparePlayerSelections();
       this.switchPlayer();
 
-      this.multiplayer.createLobby(this.gameId.getValue(), this.gameMatrix.getValue(), this.victoryCount,this.playerCount).subscribe((res: any) => {
+      this.multiplayer.createLobby(this.gameId.getValue(), this.generateGameMatrix(), this.victoryCount, this.maxPlayerCount, this.playerSelections).subscribe((res: any) => {
         this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
+        this.playerSelections = JSON.parse(res[0].playerSelections);
+        this.wonPlayerIndex = res[0].wonPlayerIndex;
+        this.activePlayerIndex.next(res[0].activePlayerIndex);
+        this.joinedPlayers = res[0].joinedPlayers;
+        this.playEnable = this.checkGameStatus();
 
         console.log(this.gameMatrix.getValue());
       });
@@ -73,86 +80,81 @@ export class GameService {
     if (!lobbyId) {
       this.errorMessage.next('A csatlakozáshoz adja meg a játék azonosítóját');
     } else {
+      if (this.gameId.getValue() !== lobbyId) {
+        this.newJoining = true;
+      }
+
       this.gameId.next(lobbyId);
 
       this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
-        let oldFieldCount: number = this.fieldCount.getValue();
-        let activePlayerIndex: number = 1;
-        let currentPlayerIndex: number = 2;
-        let playerSelections: any = [];
-
         this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
-        this.colCount = this.rowCount = this.gameMatrix.getValue().length;
-        this.fieldCount.next(this.colCount * this.colCount);
+        this.playerSelections = JSON.parse(res[0].playerSelections);
         this.wonPlayerIndex = res[0].wonPlayerIndex;
-        this.victoryCount = res[0].victoryCount;
-        this.playerCount = res[0].playerCount;
-        this.playEnable = this.preCheck();
-        this.activePlayerIndex.next(activePlayerIndex);
-        this.playerSelections = playerSelections;
-        this.currentPlayerIndex = currentPlayerIndex;
+        this.activePlayerIndex.next(res[0].activePlayerIndex);
+        this.joinedPlayers = res[0].joinedPlayers;
+        this.playEnable = this.checkGameStatus();
 
-        if (this.playEnable) {
+        if (this.newJoining) {
+          this.multiplayer.updateJoinedPlayers(this.gameId.getValue(), this.joinedPlayers);
+          let oldFieldCount: number = this.fieldCount.getValue();
+
+          this.colCount = this.rowCount = this.gameMatrix.getValue().length;
+          this.fieldCount.next(this.colCount * this.colCount);
+          this.victoryCount = res[0].victoryCount;
+          this.maxPlayerCount = res[0].maxPlayerCount;
+
           if (oldFieldCount !== this.fieldCount.getValue()) {
             this.prepareWonMatrix();
           }
 
-          this.preparePlayerSelections();
-
-          console.log(this.gameMatrix.getValue());
+          this.newJoining = false;
         }
       });
     }
   }
 
   async fieldPressed(i: number, j: number): Promise<number> {
-    let currentPlayerIndex: number = this.activePlayerIndex.getValue();
     let status: number = -1;
 
     if (this.playEnable) {
-      status = currentPlayerIndex;
+      if (this.joinedPlayers[this.activePlayerIndex.getValue()] === this.playerId) {
+        status = this.activePlayerIndex.getValue();
 
-      let gameMatrix:number[][] = this.gameMatrix.getValue();
+        let gameMatrix: number[][] = this.gameMatrix.getValue();
 
-      if (gameMatrix[i][j] === 0) {
-        let fieldIndex: number = this.getFieldIndex(i, j);
+        if (gameMatrix[i][j] === 0) {
+          let fieldIndex: number = this.getFieldIndex(i, j);
+          this.playerSelections[this.activePlayerIndex.getValue()].push(fieldIndex);
 
-        gameMatrix[i][j] = currentPlayerIndex;
+          gameMatrix[i][j] = this.activePlayerIndex.getValue();
 
-        this.gameMatrix.next(gameMatrix);
-        if (this.gameId) {
-          this.multiplayer.updateGameState(this.gameId.getValue(), gameMatrix);
-        }
+          this.gameMatrix.next(gameMatrix);
+          this.playEnable = this.checkGameStatus();
 
-        this.playerSelections[currentPlayerIndex].push(fieldIndex);
+          if (this.playEnable) {
+            this.switchPlayer();
+          }
 
-        if (this.checkIfWon()) {
-          this.errorMessage.next('A ' + currentPlayerIndex + ' játékos nyert');
-          this.wonPlayerIndex = currentPlayerIndex;
-          this.playEnable = false;
-        } else if (this.checkIfFinished()) {
-          this.errorMessage.next('Nincs több lépési lehetőség');
-          this.playEnable = false;
+          this.multiplayer.updateGameState(this.gameId.getValue(), gameMatrix, this.playerSelections, this.activePlayerIndex.getValue(), this.wonPlayerIndex);
         } else {
-          this.errorMessage.next('');
-          this.switchPlayer();
+          this.errorMessage.next('Nem írhatod felül a már kitöltött mezőt');
+          status = -1;
         }
       } else {
-        this.errorMessage.next('Nem írhatod felül a már kitöltött mezőt');
-        status = -1;
+        this.errorMessage.next('Nem te következel');
       }
     }
 
     return status;
   }
 
-  private preCheck(): boolean {
+  private preCheckGeneration(): boolean {
     let result: boolean = true;
 
-    if (this.playerCount == 0) {
+    if (this.maxPlayerCount == 0) {
       this.errorMessage.next('A játékosok száma nem lehet 0');
       result = false;
-    } else if (this.playerCount > this.colCount) {
+    } else if (this.maxPlayerCount > this.colCount) {
       this.errorMessage.next('A játékosok száma nem lehet arányaiban nagyobb a pálya méreténél');
       result = false;
     } else if (this.victoryCount == 0) {
@@ -166,8 +168,25 @@ export class GameService {
     return result;
   }
 
-  private generatePlayground(): void {
-    let gameMatrix:number[][] = [];
+  private checkGameStatus(): boolean {
+    let result: boolean = true;
+
+    if (this.checkIfWon()) {
+      this.wonPlayerIndex = this.activePlayerIndex.getValue();
+      this.errorMessage.next('A ' + this.wonPlayerIndex + ' játékos nyert');
+      result = false;
+    } else if (this.checkIfFinished()) {
+      this.errorMessage.next('Nincs több lépési lehetőség');
+      result = false;
+    } else {
+      this.errorMessage.next('');
+    }
+
+    return result;
+  }
+
+  private generateGameMatrix(): number[][] {
+    let gameMatrix: number[][] = [];
 
     for (let i = 0; i < this.rowCount; i++) {
       gameMatrix.push([]);
@@ -177,7 +196,7 @@ export class GameService {
       }
     }
 
-    this.gameMatrix.next(gameMatrix);
+    return gameMatrix;
   }
 
   private getFieldIndex(i: number, j: number): number {
@@ -192,7 +211,7 @@ export class GameService {
   private getNextPlayer(): number {
     let nextPlayer: number = -1;
 
-    if (this.activePlayerIndex.getValue() === this.playerCount) {
+    if (this.activePlayerIndex.getValue() === this.maxPlayerCount) {
       nextPlayer = 1;
     } else {
       nextPlayer = this.activePlayerIndex.getValue() + 1;
@@ -214,7 +233,8 @@ export class GameService {
   }
 
   private preparePlayerSelections(): void {
-    for (let i: number = 0; i < this.playerCount; i++) {
+
+    for (let i: number = 0; i <= this.maxPlayerCount; i++) {
       this.playerSelections[i + 1] = [];
     }
   }
