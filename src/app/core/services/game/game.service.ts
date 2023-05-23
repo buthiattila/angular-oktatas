@@ -8,7 +8,7 @@ import {MultiplayerService} from "./multiplayer.service";
 })
 export class GameService {
 
-  isGameRunning: boolean = true;
+  playEnable: boolean = true;
   rowCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 0;
@@ -30,8 +30,8 @@ export class GameService {
   private activePlayerIndex = new BehaviorSubject<number>(0);
   activePlayerIndex$ = this.activePlayerIndex.asObservable();
 
-  private gameSubj: BehaviorSubject<number[][]> = new BehaviorSubject([[1]]);
-  game$ = this.gameSubj.asObservable();
+  private gameMatrix: BehaviorSubject<number[][]> = new BehaviorSubject([[1]]);
+  game$ = this.gameMatrix.asObservable();
 
   constructor(private multiplayer: MultiplayerService) {
   }
@@ -45,9 +45,9 @@ export class GameService {
     this.playerCount = playerCount;
     this.wonPlayerIndex = 0;
     this.activePlayerIndex.next(0);
-    this.isGameRunning = this.preCheck();
+    this.playEnable = this.preCheck();
 
-    if (this.isGameRunning) {
+    if (this.playEnable) {
       this.errorMessage.next('');
       this.gameId.next(Math.floor(Math.random() * 100000000));
 
@@ -55,55 +55,51 @@ export class GameService {
         this.prepareWonMatrix();
       }
 
-      this.preparePlayerSelections();
       this.generatePlayground();
+      this.preparePlayerSelections();
+      this.switchPlayer();
 
-      this.multiplayer.createLobby(this.gameId.getValue(), this.gameSubj.getValue()).subscribe((res: any) => {
-        this.gameSubj.next(JSON.parse(res[0]));
+      this.multiplayer.createLobby(this.gameId.getValue(), this.gameMatrix.getValue(), this.victoryCount,this.playerCount).subscribe((res: any) => {
+        this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
 
-        this.refreshPlayGround();
+        console.log(this.gameMatrix.getValue());
       });
     }
 
     return this.gameId.getValue();
   }
 
-  joinGame(lobbyId: number) { // 68514065
+  joinGame(lobbyId: number) {
     if (!lobbyId) {
       this.errorMessage.next('A csatlakozáshoz adja meg a játék azonosítóját');
     } else {
       this.gameId.next(lobbyId);
 
       this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
-        this.gameSubj.next(JSON.parse(res[0]));
-
-        // TODO: ezeket mind meg kell kapni a db-ből, hogy a felületet fel lehessen építeni
-        // TODO: le kell A a db-nek egy user azonosítót, amellyel utána lekezelheti, hogy én hanyadik user vagyok
-        let colCount: number = 4;
-        let victoryCount: number = 4;
-        let playerCount: number = 4;
+        let oldFieldCount: number = this.fieldCount.getValue();
         let activePlayerIndex: number = 1;
         let currentPlayerIndex: number = 2;
-        let isGameRunning: boolean = true;
-        let wonPlayerIndex: number = res[1];
         let playerSelections: any = [];
 
-        this.fieldCount.next(colCount * colCount);
-        this.colCount = this.rowCount = colCount;
-        this.victoryCount = victoryCount;
-        this.playerCount = playerCount;
-        this.isGameRunning = isGameRunning;
-        this.wonPlayerIndex = wonPlayerIndex;
+        this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
+        this.colCount = this.rowCount = this.gameMatrix.getValue().length;
+        this.fieldCount.next(this.colCount * this.colCount);
+        this.wonPlayerIndex = res[0].wonPlayerIndex;
+        this.victoryCount = res[0].victoryCount;
+        this.playerCount = res[0].playerCount;
+        this.playEnable = this.preCheck();
         this.activePlayerIndex.next(activePlayerIndex);
         this.playerSelections = playerSelections;
         this.currentPlayerIndex = currentPlayerIndex;
 
-        this.isGameRunning = this.preCheck();
+        if (this.playEnable) {
+          if (oldFieldCount !== this.fieldCount.getValue()) {
+            this.prepareWonMatrix();
+          }
 
-        if (this.isGameRunning) {
-          this.prepareWonMatrix();
           this.preparePlayerSelections();
-          this.refreshPlayGround();
+
+          console.log(this.gameMatrix.getValue());
         }
       });
     }
@@ -113,19 +109,19 @@ export class GameService {
     let currentPlayerIndex: number = this.activePlayerIndex.getValue();
     let status: number = -1;
 
-    if (this.isGameRunning) {
+    if (this.playEnable) {
       status = currentPlayerIndex;
 
-      let game:number[][] = this.gameSubj.getValue();
+      let gameMatrix:number[][] = this.gameMatrix.getValue();
 
-      if (game[i][j] === 0) {
+      if (gameMatrix[i][j] === 0) {
         let fieldIndex: number = this.getFieldIndex(i, j);
 
-        game[i][j] = currentPlayerIndex;
+        gameMatrix[i][j] = currentPlayerIndex;
 
-        this.gameSubj.next(game);
+        this.gameMatrix.next(gameMatrix);
         if (this.gameId) {
-          this.multiplayer.updateGameState(this.gameId.getValue(), game);
+          this.multiplayer.updateGameState(this.gameId.getValue(), gameMatrix);
         }
 
         this.playerSelections[currentPlayerIndex].push(fieldIndex);
@@ -133,12 +129,13 @@ export class GameService {
         if (this.checkIfWon()) {
           this.errorMessage.next('A ' + currentPlayerIndex + ' játékos nyert');
           this.wonPlayerIndex = currentPlayerIndex;
-          this.isGameRunning = false;
+          this.playEnable = false;
         } else if (this.checkIfFinished()) {
           this.errorMessage.next('Nincs több lépési lehetőség');
-          this.isGameRunning = false;
+          this.playEnable = false;
         } else {
           this.errorMessage.next('');
+          this.switchPlayer();
         }
       } else {
         this.errorMessage.next('Nem írhatod felül a már kitöltött mezőt');
@@ -170,23 +167,17 @@ export class GameService {
   }
 
   private generatePlayground(): void {
-    let game:number[][] = [];
+    let gameMatrix:number[][] = [];
 
     for (let i = 0; i < this.rowCount; i++) {
-      game.push([]);
+      gameMatrix.push([]);
 
       for (let j = 0; j < this.colCount; j++) {
-       game[i].push(0);
+        gameMatrix[i].push(0);
       }
     }
 
-    this.gameSubj.next(game);
-  }
-
-  private refreshPlayGround(): void {
-    this.switchPlayer();
-
-    console.log(this.gameSubj.getValue());
+    this.gameMatrix.next(gameMatrix);
   }
 
   private getFieldIndex(i: number, j: number): number {
@@ -215,7 +206,7 @@ export class GameService {
   }
 
   private checkIfFinished(): boolean {
-    return this.gameSubj.getValue().every(row => !row.includes(0));
+    return this.gameMatrix.getValue().every(row => !row.includes(0));
   }
 
   private checkIfWon(): boolean {

@@ -51,12 +51,7 @@ export class TicTacToeComponent implements OnInit {
   }
 
   newGame(): void {
-    if (this.planColCount === 0) {
-      this.colCount = 4;
-    } else {
-      this.colCount = this.planColCount;
-    }
-
+    this.colCount = (this.planColCount === 0 ? this.defaultColCount : this.planColCount);
     this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.playerCount);
   }
 

@@ -1,7 +1,7 @@
 import {Observable} from "rxjs"
 
 export interface IMultiplayerService {
-  createLobby(id: number, game: number[][]): void
+  createLobby(id: number, game: number[][],victoryCount:number,playerCount:number): void
 
   joinLobby(id: number): any
 

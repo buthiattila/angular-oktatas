@@ -23,9 +23,16 @@ export class MultiplayerService implements IMultiplayerService {
 
   }
 
-  createLobby(id: number, game: number[][]): any {
+  createLobby(id: number, game: number[][], victoryCount: number, playerCount: number): any {
     let lobbyRef = this.db.object(id.toString());
-    lobbyRef.set({game: JSON.stringify(game), winner: 0});
+    lobbyRef.set({
+      game: {
+        gameMatrix: JSON.stringify(game),
+        wonPlayerIndex: 0,
+        victoryCount: victoryCount,
+        playerCount: playerCount
+      }
+    });
 
     return this.joinLobby(id);
   }
@@ -35,8 +42,8 @@ export class MultiplayerService implements IMultiplayerService {
   }
 
   updateGameState(id: number, game: number[][]): void {
-    let lobbyRef = this.db.object(id.toString());
-    lobbyRef.update({game: JSON.stringify(game)});
+    let lobbyRef = this.db.object(id.toString() + '/game');
+    lobbyRef.update({gameMatrix: JSON.stringify(game)});
   }
 
 }
