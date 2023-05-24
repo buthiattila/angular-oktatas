@@ -29,6 +29,9 @@ export class GameService {
   private fieldCount = new BehaviorSubject<number>(0);
   fieldCount$ = this.fieldCount.asObservable();
 
+  private joinedPlayerCount = new BehaviorSubject<number>(0);
+  joinedPlayerCount$ = this.joinedPlayerCount.asObservable();
+
   private activePlayerIndex = new BehaviorSubject<number>(0);
   activePlayerIndex$ = this.activePlayerIndex.asObservable();
 
@@ -67,6 +70,7 @@ export class GameService {
         this.wonPlayerIndex = res[0].wonPlayerIndex;
         this.activePlayerIndex.next(res[0].activePlayerIndex);
         this.joinedPlayers = res[0].joinedPlayers;
+        this.joinedPlayerCount.next(Object.keys(res[0].joinedPlayers).length - 1);
         this.playEnable = this.checkGameStatus();
 
         console.log(this.gameMatrix.getValue());
@@ -78,7 +82,7 @@ export class GameService {
 
   joinGame(lobbyId: number) {
     if (!lobbyId) {
-      this.errorMessage.next('A csatlakozáshoz adja meg a játék azonosítóját');
+      this.errorMessage.next('A csatlakozáshoz adja meg a szoba azonosítóját');
     } else {
       if (this.gameId.getValue() !== lobbyId) {
         this.newJoining = true;
@@ -87,27 +91,33 @@ export class GameService {
       this.gameId.next(lobbyId);
 
       this.multiplayer.joinLobby(this.gameId.getValue()).subscribe((res: any) => {
-        this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
-        this.playerSelections = JSON.parse(res[0].playerSelections);
-        this.wonPlayerIndex = res[0].wonPlayerIndex;
-        this.activePlayerIndex.next(res[0].activePlayerIndex);
-        this.joinedPlayers = res[0].joinedPlayers;
-        this.playEnable = this.checkGameStatus();
+        if (!Object.keys(res).length) {
+          this.errorMessage.next('A csatlakozáshoz megadott szoba azonosító érvénytelen');
+        } else {
+          this.gameMatrix.next(JSON.parse(res[0].gameMatrix));
+          this.playerSelections = JSON.parse(res[0].playerSelections);
+          this.wonPlayerIndex = res[0].wonPlayerIndex;
+          this.activePlayerIndex.next(res[0].activePlayerIndex);
+          this.joinedPlayers = res[0].joinedPlayers;
+          this.playEnable = this.checkGameStatus();
 
-        if (this.newJoining) {
-          this.multiplayer.updateJoinedPlayers(this.gameId.getValue(), this.joinedPlayers);
-          let oldFieldCount: number = this.fieldCount.getValue();
+          if (this.newJoining) {
+            this.multiplayer.updateJoinedPlayers(this.gameId.getValue(), this.joinedPlayers);
+            let oldFieldCount: number = this.fieldCount.getValue();
 
-          this.colCount = this.rowCount = this.gameMatrix.getValue().length;
-          this.fieldCount.next(this.colCount * this.colCount);
-          this.victoryCount = res[0].victoryCount;
-          this.maxPlayerCount = res[0].maxPlayerCount;
+            this.colCount = this.rowCount = this.gameMatrix.getValue().length;
+            this.fieldCount.next(this.colCount * this.colCount);
+            this.victoryCount = res[0].victoryCount;
+            this.maxPlayerCount = res[0].maxPlayerCount;
 
-          if (oldFieldCount !== this.fieldCount.getValue()) {
-            this.prepareWonMatrix();
+            if (oldFieldCount !== this.fieldCount.getValue()) {
+              this.prepareWonMatrix();
+            }
+
+            this.newJoining = false;
           }
 
-          this.newJoining = false;
+          this.joinedPlayerCount.next(Object.keys(res[0].joinedPlayers).length - 1);
         }
       });
     }
@@ -148,6 +158,23 @@ export class GameService {
     return status;
   }
 
+  private checkGameStatus(): boolean {
+    let result: boolean = true;
+
+    if (this.checkIfWon()) {
+      this.wonPlayerIndex = this.activePlayerIndex.getValue();
+      this.errorMessage.next('A ' + this.wonPlayerIndex + ' játékos nyert');
+      result = false;
+    } else if (this.checkIfFinished()) {
+      this.errorMessage.next('Nincs több lépési lehetőség');
+      result = false;
+    } else {
+      this.errorMessage.next('');
+    }
+
+    return result;
+  }
+
   private preCheckGeneration(): boolean {
     let result: boolean = true;
 
@@ -163,23 +190,6 @@ export class GameService {
     } else if (this.victoryCount > this.rowCount) {
       this.errorMessage.next('A nyeréshez szükséges mezők száma nem lehet több, mint a sorok / oszlopok száma');
       result = false;
-    }
-
-    return result;
-  }
-
-  private checkGameStatus(): boolean {
-    let result: boolean = true;
-
-    if (this.checkIfWon()) {
-      this.wonPlayerIndex = this.activePlayerIndex.getValue();
-      this.errorMessage.next('A ' + this.wonPlayerIndex + ' játékos nyert');
-      result = false;
-    } else if (this.checkIfFinished()) {
-      this.errorMessage.next('Nincs több lépési lehetőség');
-      result = false;
-    } else {
-      this.errorMessage.next('');
     }
 
     return result;

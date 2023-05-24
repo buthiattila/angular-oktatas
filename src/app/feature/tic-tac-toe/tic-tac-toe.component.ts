@@ -16,10 +16,12 @@ export class TicTacToeComponent implements OnInit {
   colCount: number = 0;
   victoryCount: number = 3;
   maxPlayerCount: number = 2;
+  joinedPlayercount: number = 0;
   numbers: number[] = [];
   errorMessage: string = '';
   activePlayerIndex: number = 0;
   lobbyId: number = 0;
+  lobbyType: string = '';
   game: number[][] = [];
   private unsubscribe = new Subject<void>();
 
@@ -34,6 +36,10 @@ export class TicTacToeComponent implements OnInit {
   ngOnInit() {
     this.gameService.game$.subscribe(res => {
       this.game = res;
+    });
+
+    this.gameService.joinedPlayerCount$.pipe(takeUntil(this.unsubscribe)).subscribe((res) => {
+      this.joinedPlayercount = res;
     });
 
     this.gameService.errorMessage$.pipe(takeUntil(this.unsubscribe)).subscribe((res) => {
@@ -53,10 +59,12 @@ export class TicTacToeComponent implements OnInit {
   newGame(): void {
     this.colCount = (this.planColCount === 0 ? this.defaultColCount : this.planColCount);
     this.lobbyId = this.gameService.newGame(this.colCount, this.victoryCount, this.maxPlayerCount);
+    this.lobbyType = 'Szervező';
   }
 
   joinGame(): void {
     this.gameService.joinGame(this.lobbyId);
+    this.lobbyType = 'Vendég';
   }
 
 }

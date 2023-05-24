@@ -2,6 +2,8 @@
   <div class="c20">
     <div id="controllers">
       <div>Szoba azonosító: <span *ngIf="lobbyId">{{lobbyId}}</span></div>
+      <div>Kapcsolat típusa: <span *ngIf="lobbyType">{{lobbyType}}</span></div>
+      <div>Játékosok száma: <span *ngIf="maxPlayerCount">{{maxPlayerCount}}/{{joinedPlayercount}}</span></div>
       <div>Jelenlegi játékos: {{activePlayerIndex}}</div>
       <div>
         <mat-slider min="{{minColCount}}" max="{{maxColCount}}" showTickMarks discrete class="w-90">
