@@ -13,36 +13,25 @@ export class FieldComponent implements OnInit {
   @Input() lineBreakNeeded: boolean = false;
   @Input() colCount: number = 0;
   @Input() index: number = 0;
-  @Output() coords: EventEmitter<Coords> = new EventEmitter();
-
   @Input() fieldStatus: number = 0;
+  @Input() fieldCoords: Coords = {i: 0, j: 0};
+  @Output() coords: EventEmitter<Coords> = new EventEmitter();
   gameId: number = 0;
 
   constructor(private gameService: GameService) {
   }
 
   ngOnInit() {
-    this.gameService.gameId$.subscribe((res: number) => {
-      if (this.gameId !== res) {
-        this.gameId = res;
-        this.fieldStatus = 0;
-      }
-    });
   }
 
   async fieldClicked() {
-    const coords: Coords = {
-      i: Math.floor(this.index / this.colCount),
-      j: this.index % this.colCount
-    };
-
-    const status = await this.gameService.fieldPressed(coords.i, coords.j);
+    const status = await this.gameService.fieldPressed(this.fieldCoords.i, this.fieldCoords.j);
 
     if (status > 0) {
       this.fieldStatus = status;
     }
 
-    this.coords.emit(coords);
+    this.coords.emit(this.fieldCoords);
   }
 
 }

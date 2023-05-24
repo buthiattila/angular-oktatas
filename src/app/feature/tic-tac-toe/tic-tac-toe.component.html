@@ -29,8 +29,11 @@
   <div class="c80">
     <div id="playground" *ngIf="activePlayerIndex > 0">
       <div id="gameBoard">
-        <ng-container *ngFor="let number of numbers; let i = index">
-          <app-field [lineBreakNeeded]="i%colCount===0" [colCount]="colCount" [index]="i"></app-field>
+        <ng-container *ngFor="let row of game; let i = index" >
+          <ng-container *ngFor="let field of row; let j = index">
+            <app-field [fieldStatus]="field" [fieldCoords]="{i:i,j:j}" [lineBreakNeeded]="j+1 === row.length">
+            </app-field>
+          </ng-container>
         </ng-container>
       </div>
     </div>
