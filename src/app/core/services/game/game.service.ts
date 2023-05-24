@@ -36,7 +36,7 @@ export class GameService {
   activePlayerIndex$ = this.activePlayerIndex.asObservable();
 
   private gameMatrix: BehaviorSubject<number[][]> = new BehaviorSubject([[1]]);
-  game$ = this.gameMatrix.asObservable();
+  gameMatrix$ = this.gameMatrix.asObservable();
 
   constructor(private multiplayer: MultiplayerService) {
     this.multiplayer.setPlayerId(this.playerId);
@@ -72,8 +72,6 @@ export class GameService {
         this.joinedPlayers = res[0].joinedPlayers;
         this.joinedPlayerCount.next(Object.keys(res[0].joinedPlayers).length - 1);
         this.playEnable = this.checkGameStatus();
-
-        console.log(this.gameMatrix.getValue());
       });
     }
 

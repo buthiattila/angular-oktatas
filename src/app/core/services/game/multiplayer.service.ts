@@ -63,12 +63,14 @@ export class MultiplayerService implements IMultiplayerService {
   }
 
   updateJoinedPlayers(id: number, joinedPlayers: number[]): void {
-    joinedPlayers.push(this.playerId);
+    if (!joinedPlayers.includes(this.playerId)) {
+      joinedPlayers.push(this.playerId);
 
-    let lobbyRef = this.db.object(id.toString() + '/game');
-    lobbyRef.update({
-      joinedPlayers: joinedPlayers
-    });
+      let lobbyRef = this.db.object(id.toString() + '/game');
+      lobbyRef.update({
+        joinedPlayers: joinedPlayers
+      });
+    }
   }
 
 }

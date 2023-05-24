@@ -11,7 +11,7 @@ import {Subject, takeUntil} from "rxjs";
 export class TicTacToeComponent implements OnInit {
   minColCount: number = 3;
   maxColCount: number = 5;
-  defaultColCount: number = 4;
+  defaultColCount: number = 3;
   planColCount: number = 0;
   colCount: number = 0;
   victoryCount: number = 3;
@@ -22,7 +22,7 @@ export class TicTacToeComponent implements OnInit {
   activePlayerIndex: number = 0;
   lobbyId: number = 0;
   lobbyType: string = '';
-  game: number[][] = [];
+  gameMatrix: number[][] = [];
   private unsubscribe = new Subject<void>();
 
   constructor(private gameService: GameService) {
@@ -34,8 +34,8 @@ export class TicTacToeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.gameService.game$.subscribe(res => {
-      this.game = res;
+    this.gameService.gameMatrix$.subscribe(res => {
+      this.gameMatrix = res;
     });
 
     this.gameService.joinedPlayerCount$.pipe(takeUntil(this.unsubscribe)).subscribe((res) => {
